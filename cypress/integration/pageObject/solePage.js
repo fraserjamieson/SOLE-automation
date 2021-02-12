@@ -50,5 +50,21 @@ class logIn {
     var submit = cy.get("div.d-block.text-right.card-footer > button:nth-child(3)"); 
     return submit;
   } 
+  cypBtn(){
+    var cypBtn = cy.get("div.d-block.text-right.card-footer").contains('Claim Profile'); 
+    return cypBtn;
+  } 
+  cypMsg(){
+    cy.get(".v-card")
+      .should("contain", "Claim Profile Confirmation")
+      .should("contain", "Are you sure to send a request to claim profile for this organisation ?");
+     cy.get("div.v-card__actions > button:nth-child(2) ").click();     
+  }
+  cypSuccessMsg(emailID){
+    cy.get(".v-card")
+      .should("contain", "Claim Profile Confirmation")
+      .should("contain", `Email sent successfully to admin user email ${emailID}`);
+     cy.get(" div.v-card__actions > button").click();     
+  }
 }
 export default new logIn();
