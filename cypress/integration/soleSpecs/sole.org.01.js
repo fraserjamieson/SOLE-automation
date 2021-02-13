@@ -35,6 +35,8 @@ describe("Organisation Admin user operations ", () => {
     masterPg.enterTextInput("Mobile", "123456");
     masterPg.enterTextInput("Website", "www.testabc.com");
     masterPg.selectCurrency();
+    cy.pause();
+    //786
     solePg.submitBtn().click();
     cy.wait(500);
   });
@@ -47,7 +49,7 @@ describe("Organisation Admin user operations ", () => {
     masterPg.enterTextInput("Mobile", basefunction.getRandomNumber(6));
     solePg.cypBtn().click();
     solePg.cypMsg();
-    solePg.cypSuccessMsg(emailID);
+    solePg.cypSuccessMsg(admnMail);
   });
 
   it("TC_03_Org Admin can claim his profile from link recieved in mail and can create password to access site", () => {

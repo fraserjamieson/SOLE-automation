@@ -1,6 +1,6 @@
 class adminPage {
   loginBtn() {
-    cy.get("#navbarBasicExample > div.navbar-end > div > div > a.button.is-white").click();
+    cy.get(".buttons > .button").contains('Login').click();
   }
 
   enterMailId(mailId) {
@@ -21,15 +21,21 @@ class adminPage {
   }
 
   selectSOLEmail(){
-    //cy.get(".subject").contains('Claim your profile in Dunbar at sole.scot').click();
-    cy.get('#public_6024486f31635d00174fae65 > .mail-col-1 > .title').click();
+    cy.get("#depublicemailinbox").contains('SOLE').first().click();
   }
 
   takeMeToSolePage(){
-    cy.scrollTo('bottom');
-    //cy.get(".button-primary").contains('Take me to my SOLE profile').click();
-    cy.get('body > table > tbody > tr > td > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr > td > a').click();
+    const getIframeDocument = () => {
+      return cy
+      .get('iframe')
+      .its('0.contentDocument').should('exist')
+    }
+    const getIframeBody = () => {
+      return getIframeDocument()
+      .its('body').should('not.be.undefined')
+      .then(cy.wrap)
+    }
+    getIframeBody().find(".action").contains('Take me to my SOLE profile').click();
   }
-  
 }
 export default new adminPage();

@@ -8,7 +8,7 @@ import admn from "../pageObject/cypMailPage";
   const password = Cypress.env('password')
     //lounch baseURL
     cy.visit('/');
-    cy.title().should("eq", "SOLE - Supporting our local economy"); 
+    cy.title().should("eq", "Local High Street"); 
     //Enter credentials
     solePg.email().type(email);
     solePg.password().type(password);
@@ -75,12 +75,6 @@ import admn from "../pageObject/cypMailPage";
      mailName = Cypress.env('mail7');
 
      cy.visit("https://mail7.io");
-    // cy.get("#navbarBasicExample > div.navbar-end > div > div > a.button.is-white").click();
-    // cy.get("[name='email']").clear().type("stasoletesting@gmail.com");
-    // cy.get("div.auth0-lock-input-block.auth0-lock-input-show-password > div > div > input").clear().type("STAAutomation@21");
-    // cy.get("#auth0-lock-container-1 > div > div.auth0-lock-center > form > div > div > div > button").click();
-    // cy.get("#popupusername").clear().type("stasoletesting@mail7.io");
-    // cy.get("button.swal2-confirm.swal2-styled").click();
     admn.loginBtn();
     admn.enterMailId(mailId);
     admn.enterMailPwd(pwd);
