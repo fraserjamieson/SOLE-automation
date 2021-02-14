@@ -8,6 +8,7 @@
     "password": "test1234",
     "mail7loginId" : "stasoletesting@gmail.com",
     "mail7" : "stasoletesting@mail7.io",
-    "mail7pwd" : "STAAutomation@21"
+    "mail7pwd" : "STAAutomation@21",
+    "newPwd" : "test1234"
   }
 }

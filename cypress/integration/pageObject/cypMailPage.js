@@ -35,7 +35,25 @@ class adminPage {
       .its('body').should('not.be.undefined')
       .then(cy.wrap)
     }
-    getIframeBody().find(".action").contains('Take me to my SOLE profile').click();
+   getIframeBody().find(".action").contains('Take me to my SOLE profile')
+   .invoke("removeAttr", "target")
+    .invoke("attr", "href")
+      .then(href => {
+        cy.writeFile('cypress/fixtures/link.json', { link: href })
+       });
+  }
+  setPwd(){
+    var newPwd = Cypress.env('password');
+   var pwd = cy.get("div.container").contains('New Password')
+    .within(() => {
+      pwd.siblings("input").clear().type(newPwd); 
+    });
+    var pwd2 = cy.get("div.container").contains('Confirm Password')
+    .within(() => {
+      pwd2.siblings("input").clear().type(newPwd); 
+    });
+    //.type(newPwd);
+    cy.get("button.btn-shadow-primary").click();
   }
 }
 export default new adminPage();

@@ -3,19 +3,16 @@ import admn from "../pageObject/cypMailPage";
 // let dataMap = new Map();
  class baseFunction {
 //   //Reusable methods
-  login() {
-    const email = Cypress.env('email')
-  const password = Cypress.env('password')
+  login(email,pwd) {
     //lounch baseURL
     cy.visit('/');
     cy.title().should("eq", "Local High Street"); 
     //Enter credentials
     solePg.email().type(email);
-    solePg.password().type(password);
+    solePg.password().type(pwd);
     //click login btn
     solePg.logInBtn().click();
     //assertion
-    solePg.newsMenu().should("be.visible");
     solePg.adminMenu().should("be.visible");
     solePg.setUpMenu().should("be.visible");
     solePg.analyticsMenu().should("be.visible");

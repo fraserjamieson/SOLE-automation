@@ -21,6 +21,50 @@ xdescribe("New user registration", async function() {
           assert.isNotNull(email, `Email was not found`);
         });
     });
+    
+  xit("Search and delete the product", () => {
+    getTestDataAndLogin("Org_Test_001");
+    masterPg.navigateTo("local organisations");
+    masterPg.enterSearchInput("TestABC");
+    masterPg.selectAction("delete");
+    cy.wait(5000);
+    cy.on("window:confirm", (str) => {
+      expect(str).to.equal(`Are you sure you want to delete this record?`);
+    });
+    cy.on("window:confirm", () => true);
+    cy.wait(2000);
+    basefunction.logOut();
+  });
+
+  xit("Search Tag", () => {
+    getTestDataAndLogin("Org_Test_001");
+    masterPg.navigateTo("Tags");
+    basefunction.searchFirstRecord("SearchTag");
+    cy.wait(2000);
+    basefunction.logOut();
+  });
+
+  xit("Search Category", () => {
+    getTestDataAndLogin("Org_Test_001");
+    masterPg.navigateTo("Categories");
+    masterPg.enterSearchInput("Offers");
+    basefunction.searchFirstRecord("SearchCat");
+    cy.wait(2000);
+    basefunction.logOut();
+  });
+
+  xit("Edit Tag", () => {
+    getTestDataAndLogin("Org_Test_001");
+    masterPg.navigateTo("Tags");
+    basefunction.searchFirstRecord("SearchTag");
+    cy.wait(2000);
+    masterPg.selectAction("edittag");
+    var newName = basefunction.getRandomString(4);
+    masterPg.enterText("editedTagValue", newName);
+    masterPg.selectAction("Save");
+    cy.wait(2000);
+    basefunction.logOut();
+  });
   });
   
   describe('Login', () => {
