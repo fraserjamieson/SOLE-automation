@@ -1,5 +1,14 @@
 {
   "viewportWidth": 1366,
-  "viewportHeight": 768,
-  "chromeWebSecurity": false
+  "viewportHeight": 850,
+  "chromeWebSecurity": false,
+  "baseUrl": "https://admintest.sole.scot",
+  "env": {
+    "email": "dunbar@demo.com",
+    "password": "test1234",
+    "mail7loginId" : "stasoletesting@gmail.com",
+    "mail7" : "stasoletesting@mail7.io",
+    "mail7pwd" : "STAAutomation@21",
+    "newPwd" : "test1234"
+  }
 }

@@ -21,15 +21,6 @@ class masterPage {
   }
   navigateTo(menu) {
     var menuOption = menu.toLowerCase();
-    // cy.get('[class="closed-sidebar closed-sidebar-md"]').then(function (
-    //   $class
-    // ) {
-    //   $class[0].setAttribute(
-    //     "class",
-    //     "closed-sidebar closed-sidebar-md closed-sidebar-open"
-    //   );
-    // });
-
     switch (menuOption) {
       case "allpost":
         cy.get(".vsm-title").contains("Posts").click();
@@ -56,30 +47,21 @@ class masterPage {
         basefunction.clickOnElement("/admin/placements");
         break;
     }
-    // cy.get(
-    //   '[class="closed-sidebar closed-sidebar-md closed-sidebar-open"]'
-    // ).then(function ($class) {
-    //   $class[0].setAttribute("class", "closed-sidebar closed-sidebar-md");
-    // });
   }
 
   //Method to click add new button
   addNewBtn() {
-    var addNew = cy.get("span.v-btn__content").contains("Add New");
+    var addNew = cy.get("span.v-btn__content",{ timeout: 10000 }).contains("Add New");
     return addNew;
   }
   selectAction(action) {
     var actionItem = action.toLowerCase();
-    //Scroll to right needs when window size is 100%
-    // cy.get("div.v-data-table__wrapper").scrollTo("right");
     switch (actionItem) {
       case "edit":
         cy.wait(3000);
         cy.get(
           "tr:nth-child(1) > td.justify-center.layout.px-0 > a:nth-child(1)"
         ).click();
-        /* .first()
-          .click();*/
         cy.wait(1000);
         break;
       case "delete":
@@ -102,8 +84,6 @@ class masterPage {
         cy.wait(1000);
         break;
     }
-    // var actionName = cy.get("td.justify-center").contains(action);
-    //  return actionName;
   }
   //Method to action based on id
   enterText(fieldName, dataValue) {
