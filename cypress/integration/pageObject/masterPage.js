@@ -51,7 +51,7 @@ class masterPage {
 
   //Method to click add new button
   addNewBtn() {
-    var addNew = cy.get("span.v-btn__content").contains("Add New");
+    var addNew = cy.get("span.v-btn__content",{ timeout: 10000 }).contains("Add New");
     return addNew;
   }
   selectAction(action) {

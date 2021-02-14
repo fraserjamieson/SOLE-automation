@@ -3,7 +3,8 @@ import admn from "../pageObject/cypMailPage";
 // let dataMap = new Map();
  class baseFunction {
 //   //Reusable methods
-  login(email,pwd) {
+  login(email) {
+    var pwd = Cypress.env('password');
     //lounch baseURL
     cy.visit('/');
     cy.title().should("eq", "Local High Street"); 

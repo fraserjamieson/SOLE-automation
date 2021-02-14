@@ -23,6 +23,9 @@ class adminPage {
   selectSOLEmail(){
     cy.get("#depublicemailinbox").contains('SOLE').first().click();
   }
+  mail7Logout(){
+    cy.get(".hide-tablet > .d-flex > .wid-u-info > .text-muted > a").click();
+  }
 
   takeMeToSolePage(){
     const getIframeDocument = () => {

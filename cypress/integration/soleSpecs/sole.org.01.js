@@ -4,13 +4,12 @@ import masterPg from "../pageObject/masterPage";
 import admn from "../pageObject/cypMailPage";
 
 describe("Organisation Admin user operations ", () => {
-  var emailID = basefunction.getUniqueEmailID();
-  var admnMail = Cypress.env('mail7');
-  const email = Cypress.env('email');
-  const password = Cypress.env('password');
-  
-  xit("TC_01_Local Admin can create and save a new Org", () => {
-    basefunction.login(email,password);
+  var emailID = basefunction.getUniqueEmailID(),
+      admnMail = Cypress.env("mail7"),
+      email = Cypress.env("email");
+
+  it("TC_01_Local Admin can create and save a new Org", () => {
+    basefunction.login(email);
     masterPg.navigateTo("local organisations");
     cy.wait(500);
     masterPg.addNewBtn().click();
@@ -41,9 +40,8 @@ describe("Organisation Admin user operations ", () => {
     solePg.submitBtn().click();
     cy.wait(500);
   });
-
-  xit("TC_02_Local Admin can edit the new org and action the Claim Profile button", () => {
-    basefunction.login(email,password);
+  it("TC_02_Local Admin can edit the new org and action the Claim Profile button", () => {
+    basefunction.login(email);
     masterPg.navigateTo("local organisations");
     masterPg.enterSearchInput("TestABC");
     masterPg.selectAction("edit");
@@ -52,23 +50,20 @@ describe("Organisation Admin user operations ", () => {
     solePg.cypMsg();
     solePg.cypSuccessMsg(admnMail);
   });
-
-  xit("TC_03.01_Org Admin can claim his profile from link recieved in mail", () => {
+  it("TC_03.01_Org Admin can claim his profile from link recieved in mail", () => {
     basefunction.mailLoging();
-    admn.selectSOLEmail()
-    admn.takeMeToSolePage(); 
+    admn.selectSOLEmail();
+    admn.takeMeToSolePage();
+    admn.mail7Logout();
   });
-  xit("TC_03.02_And can create password to access site", () => {
-    cy.readFile('cypress/fixtures/link.json').then((url) => {
+  it("TC_03.02_And can create password to access site", () => {
+    cy.readFile("cypress/fixtures/link.json").then((url) => {
       cy.visit(url.link);
     });
     admn.setPwd();
-    cy.writeFile('cypress/fixtures/link.json',{ flag: 'a+' })
+    cy.writeFile("cypress/fixtures/link.json", { flag: "a+" });
   });
-
   it("TC_04_Org Admin can edit their details by changing, adding and saving", () => {
-    basefunction.login(admnMail,password);
+    basefunction.login(admnMail);
   });
-
-
 });
