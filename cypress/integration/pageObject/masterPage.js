@@ -1,25 +1,9 @@
-import basefunction from "../reusable/baseFunctions";
+import basefunction from "../reusable/orgBaseFunctions";
 let elementIDMap = new Map();
 
 class masterPage {
-  fetchElementID(fieldName) {
-    cy.fixture("elementID").then(function (data) {
-      cy.log("***Test data" + data);
-      //const data = this.tdata;
-      cy.get(data).each((tObject) => {
-        if (tObject.fieldName === fieldName) {
-          cy.log(
-            "FieldName to pick ID : " +
-              tObject.fieldName +
-              " id as : " +
-              tObject.id
-          );
-          elementIDMap.set("id", tObject.id);
-        }
-      });
-    });
-  }
-  navigateTo(menu) {
+  
+  navigateTo(menu) { 
     var menuOption = menu.toLowerCase();
     switch (menuOption) {
       case "allpost":
@@ -36,7 +20,7 @@ class masterPage {
         cy.get(".vsm-title").contains("Tags").click();
         break;
       case "local organisations":
-        cy.get("span.vsm-title").contains("Admin").click();
+        cy.get("div.vsm-list .vsm-title").contains("Admin").click();
         cy.get(".vsm-title").contains("Local Organisations").click();
         cy.get("div.v-toolbar__title")
           .invoke("text")
@@ -48,10 +32,9 @@ class masterPage {
         break;
     }
   }
-
   //Method to click add new button
   addNewBtn() {
-    var addNew = cy.get("span.v-btn__content",{ timeout: 10000 }).contains("Add New");
+    var addNew = cy.get("button.mb-2",{ timeout: 10000 }).contains("Add New");
     return addNew;
   }
   selectAction(action) {
@@ -101,16 +84,26 @@ class masterPage {
       .get("div.v-text-field__slot")
       .contains(fieldName)
       .within(() => {
-        name.siblings("input").clear().type(fieldText); // Only yield inputs within form
+        name.siblings("input").clear().type(fieldText);
       });
   }
-
+  tickBox(fieldName) {
+    var name = cy
+      .get("label.v-label")
+      .contains(fieldName).parent('div').click();
+  }
+  enterHeader() {
+    cy.get("#orgheader > .ql-container > .ql-editor").clear().type("Hello World!");   
+  }
+  enterDesc() {
+    cy.get("#orgdesc > .ql-container > .ql-editor").clear().type("This is Description.");   
+  }
   enterSearchInput(fieldText) {
     var searchText = cy
       .get("div.v-text-field__slot")
       .contains("Search")
       .within(() => {
-        searchText.siblings("input").type(fieldText); // Only yield inputs within form
+        searchText.siblings("input").type(fieldText); 
       });
   }
   //select currency

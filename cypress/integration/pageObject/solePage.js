@@ -26,22 +26,29 @@ class logIn {
   analyticsMenu() {
     return cy.get(".vsm-icon.pe-7s-ticket");
   }
-  orgCat(){ 
-    return cy.get(":nth-child(1) > .flex > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-select__selections"); 
-  }
+  exitFromField(){
+    return cy.get("div.card-header"); 
+  } 
   selectOrgCategories(catName){
-    var catName = cy.get("div.v-list-item__content").contains(catName); 
-     return catName;
+    cy.get(':nth-child(1) > .flex > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-select__selections').click(); 
+    cy.wait(1000);
+    cy.get("div.v-list-item__content").contains(catName).click(); 
+    this.exitFromField().click();
+  }
+  selectOrgTags(TagName){
+    cy.get(":nth-child(2) > :nth-child(1) > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-select__selections").click(); 
+    var TagName = cy.get("div.v-list-item__content").contains(TagName).click(); 
+    this.exitFromField().click();
   }
   orgTag(){ 
     return cy.get(":nth-child(2) > :nth-child(1) > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-select__selections"); 
   }
-  bookingType(){ 
-    return cy.get(":nth-child(2) > :nth-child(2) > .v-input > .v-input__control > .v-input__slot > .v-select__slot"); 
+  selectBookingType(typeName){ 
+   cy.get(":nth-child(2) > :nth-child(2) > .v-input > .v-input__control > .v-input__slot > .v-select__slot").click();
+   var typeName = cy.get("div.v-list-item__content").contains(typeName).click(); 
+   this.exitFromField().click();
   }
-  exitFromField(){
-    return cy.get("div.card-header"); 
-  }  
+  
   submitBtn(){
     var submit = cy.get(".btn-shadow-primary.btn.btn-primary"); 
     return submit;
@@ -65,6 +72,19 @@ class logIn {
       .should("contain", "Claim Profile Confirmation")
       .should("contain", `Email sent successfully to admin user email ${emailID}`);
      cy.get(" div.v-card__actions > button").click();     
+  }
+  myDetails(){
+    this.profileIcon().click();
+    cy.get('.scroll-area-xs > .nav > :nth-child(3) > .nav-link').click(); 
+    this.profileIcon().click();    
+  }
+  resetPwd(){
+    this.profileIcon().click();
+    cy.get('.scroll-area-xs > .nav > :nth-child(2) > .nav-link').click(); 
+    this.profileIcon().click();    
+  }
+  editDetails(){
+    cy.get('.page-title-actions > .mr-2 > .btn-shadow').click();      
   }
 }
 export default new logIn();

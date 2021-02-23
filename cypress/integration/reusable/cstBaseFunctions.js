@@ -1,22 +1,19 @@
-import solePg from "../pageObject/solePage";
-import admn from "../pageObject/cypMailPage";
+import cst from "../pageObject/customerPage";
+
 // let dataMap = new Map();
- class baseFunction {
+ class cstBaseFunction {
 //   //Reusable methods
   login(email) {
-    var pwd = Cypress.env('password');
+    var pwd = Cypress.env('password'),
+    cstUrl = Cypress.env('cstUrl');
     //lounch baseURL
-    cy.visit('/');
-    cy.title().should("eq", "Local High Street"); 
+    cy.visit(cstUrl);
+   // cy.title().should("eq", "Local High Street"); 
     //Enter credentials
     solePg.email().type(email);
     solePg.password().type(pwd);
     //click login btn
     solePg.logInBtn().click();
-    //assertion
-    solePg.adminMenu().should("be.visible");
-    solePg.setUpMenu().should("be.visible");
-    solePg.analyticsMenu().should("be.visible");
   }
   //Log out function
   logOut() {
@@ -26,6 +23,22 @@ import admn from "../pageObject/cypMailPage";
     solePg.email().should("be.visible");
     solePg.password().should("be.visible");
   }
+ //Register function
+ register(firstName,lastName,email) {
+  var pwd = Cypress.env('password');
+ 
+  cst.firstName(firstName);
+  cst.lastName(lastName);
+  cst.email(email);
+  cst.password(pwd);
+  cst.reTypePwd(pwd);
+  cst.reCaptcha();
+  cst.tickConfirm();
+  cst.tickIagree();
+  cst.register();
+  
+}
+
   getRandomString(length) {
     var result = "";
     var characters =
@@ -66,18 +79,16 @@ import admn from "../pageObject/cypMailPage";
       masterPg.enterSearchInput(returnText);
     });
   }
-
   mailLoging(){
-    var mailId = Cypress.env('mail7loginId'),
-     pwd = Cypress.env('mail7pwd'),
-     mailName = Cypress.env('mail7');
-
-     cy.visit("https://mail7.io");
-    admn.loginBtn();
-    admn.enterMailId(mailId);
-    admn.enterMailPwd(pwd);
-    admn.submit();
-    admn.popUpHandle(mailName);
+    var pwd = Cypress.env('mailpwd'),
+     mailName = Cypress.env('mail');
+     
+     cy.visit("https://login.aol.com/");
+//https://mail.aol.co.uk/
+    admn.enterMailId(mailName);
+    admn.enterMailPwd(pwd);  
+    admn.goToMail();
   }
+ 
 }
-export default new baseFunction();
+export default new cstBaseFunction();
