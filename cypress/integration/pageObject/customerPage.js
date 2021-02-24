@@ -58,5 +58,41 @@ class customer {
   register() {
     cy.get("button.btn").contains("Register").click();
   }
+  signIn() {
+    cy.get("button.btn").contains("Sign In").click();
+  }
+  signInOnRegister() {
+    cy.get(".register-box").contains("I already have a login").click();
+  }
+  goToCustAction(optionName) {
+    cy.get("a.dropbtn").trigger('mousemove', { clientX: 200, clientY: 300 });
+    cy.get(".dropdown1-content > a").contains(optionName).click({force: true});
+  }
+  goToProfileOpt(optionName) {
+    cy.get(".navigation > li").contains(optionName).click();
+  }
+  addAddressBtn() {
+    cy.get("div.account-layout.right.mt10").contains('Add Address').click();
+  }
+  addAddressDetail(fieldName,fieldText) {
+    //cy.get(".control-group ")
+    var field = cy.get(".control-group").contains(fieldName)
+    .within(() => {
+      field.siblings("input").clear().type(fieldText); 
+    });
+  }
+  saveAddressBtn() {
+    cy.get(".theme-btn").click({force: true});
+    cy.wait(2000);
+  }
+  editAddressBtn() {
+    cy.get(".card-link").contains('Edit').click({force: true});
+  }
+  deletAddressBtn() {
+    cy.get(".card-link").contains('Delete').click({force: true});
+    cy.on('window:confirm', (str) => {
+      expect(str).to.eq('Do you really want to delete this address?')
+    })
+  }
 }
 export default new customer();

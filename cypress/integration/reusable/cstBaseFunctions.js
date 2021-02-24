@@ -3,18 +3,16 @@ import cst from "../pageObject/customerPage";
 // let dataMap = new Map();
  class cstBaseFunction {
 //   //Reusable methods
-  login(email) {
-    var pwd = Cypress.env('password'),
-    cstUrl = Cypress.env('cstUrl');
-    //lounch baseURL
-    cy.visit(cstUrl);
-   // cy.title().should("eq", "Local High Street"); 
-    //Enter credentials
-    solePg.email().type(email);
-    solePg.password().type(pwd);
-    //click login btn
-    solePg.logInBtn().click();
-  }
+logIn(email) {
+  var pwd = Cypress.env('mailpwd');
+  cst.email(email);
+  cst.password(pwd);
+  cst.signIn();
+  cy.get('.dropbtn').should('contain.text', 'Customer ABC');
+  cy.get(".menu1>a").contains('Home',{timeout: 10000}); 
+  cy.get("#search-middle").should("be.visible");
+  cy.wait(3000);
+}
   //Log out function
   logOut() {
     solePg.profileIcon().click();
