@@ -74,6 +74,15 @@ class customer {
   addAddressBtn() {
     cy.get("div.account-layout.right.mt10").contains('Add Address').click();
   }
+  editProfileBtn() {
+    cy.get("div.account-layout.right.mt10").contains('Edit').click();
+  }
+  addressErrCheck(fieldName){
+    cy.get('.control-error').should('contain.text',`The "${fieldName}" field is required`);
+  }
+  profileErrCheck(fieldName){
+    cy.get('.control-error').should('contain.text',`The ${fieldName} field is required`);
+  }
   addAddressDetail(fieldName,fieldText) {
     //cy.get(".control-group ")
     var field = cy.get(".control-group").contains(fieldName)
@@ -81,7 +90,43 @@ class customer {
       field.siblings("input").clear().type(fieldText); 
     });
   }
-  saveAddressBtn() {
+  clearAddressDetail(fieldName) {
+    //cy.get(".control-group ")
+    var field = cy.get(".control-group").contains(fieldName)
+    .within(() => {
+      field.siblings("input").clear(); 
+    });
+  }
+  clearProfileDetail(fieldName) {
+    //cy.get(".control-group ")
+    var field = cy.get(".col-12 .mandatory").contains(fieldName).siblings("div")
+    // .within(() => {
+    //   field.siblings("div")
+      .within(() => {
+        field.children("input").clear(); 
+      }); 
+    //});
+  }
+  addProfileDetail(fieldName,fieldText) {
+    var field = cy.get("div.col-12").contains(fieldName).siblings("div")
+    .within(() => {  
+      field.children("input").clear().type(fieldText); 
+    });
+  }
+  selectGender(fieldText) {
+    //var field = cy.get("div.col-12").contains('Gender').siblings("div")
+    cy.get('select')
+  .select(fieldText , { force: true })
+  .invoke('val')
+  .should('eq', fieldText)
+  }
+  selectDOB(fieldText) {
+    var field = cy.get("div.col-12").contains('Date Of Birth').siblings("div")
+    .within(() => {  
+      field.children("input").click().type(fieldText); 
+    });
+  }
+  saveBtn() {
     cy.get(".theme-btn").click({force: true});
     cy.wait(2000);
   }
