@@ -4,11 +4,12 @@
   "chromeWebSecurity": false,
   "baseUrl": "https://admintest.sole.scot",
   "env": {
+    "cstUrl": "https://test.sole.scot/dunbar",
     "email": "dunbar@demo.com",
     "password": "test1234",
-    "mail7loginId" : "stasoletesting@gmail.com",
-    "mail7" : "stasoletesting@mail7.io",
-    "mail7pwd" : "STAAutomation@21",
+    "mail" : "soletesting@aol.com",
+    "customerMail" : "soletestingcustomer@aol.com",
+    "mailpwd" : "STAAutomation@21",
     "newPwd" : "test1234"
   }
 }

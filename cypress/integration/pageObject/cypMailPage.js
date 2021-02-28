@@ -1,44 +1,31 @@
 class adminPage {
-  loginBtn() {
-    cy.get(".buttons > .button").contains('Login').click();
-  }
-
   enterMailId(mailId) {
-    cy.get("[name='email']").clear().type(mailId);
+    cy.get('#login-username').type(mailId);
+    cy.get('#login-signin').click();
   }
-
   enterMailPwd(pwd) {
-    cy.get("div.auth0-lock-input-block.auth0-lock-input-show-password > div > div > input").clear().type(pwd);
+    cy.get('#login-passwd').type(pwd);
+    cy.get('#login-signin').click();
   }
-
+  goToMail() {
+    cy.get("li.mail-link").contains('Mail')
+    .invoke("removeAttr", "target")
+    .click();
+  }
   submit() {
     cy.get("#auth0-lock-container-1 > div > div.auth0-lock-center > form > div > div > div > button").click();
   }
-
-  popUpHandle(mailId) {
-    cy.get("#popupusername").clear().type(mailId);
-    cy.get("button.swal2-confirm.swal2-styled").click();
+  selectFirstMail() {
+    cy.get('#dijit__Widget_22 > div.mailCount').click();
+   cy.wait(2000);
+    cy.get('#dojox_grid__grid_GridView_0 #page-0 > div:nth-child(1)').click();
+    cy.wait(3000);
   }
-
-  selectSOLEmail(){
-    cy.get("#depublicemailinbox").contains('SOLE').first().click();
+  mailLogout(){
+    cy.get('span.signOutLink > a').click();
   }
-  mail7Logout(){
-    cy.get(".hide-tablet > .d-flex > .wid-u-info > .text-muted > a").click();
-  }
-
   takeMeToSolePage(){
-    const getIframeDocument = () => {
-      return cy
-      .get('iframe')
-      .its('0.contentDocument').should('exist')
-    }
-    const getIframeBody = () => {
-      return getIframeDocument()
-      .its('body').should('not.be.undefined')
-      .then(cy.wrap)
-    }
-   getIframeBody().find(".action").contains('Take me to my SOLE profile')
+  cy.get("table > tbody > tr > td > a").contains('Take me to my SOLE profile')
    .invoke("removeAttr", "target")
     .invoke("attr", "href")
       .then(href => {
@@ -55,8 +42,25 @@ class adminPage {
     .within(() => {
       pwd2.siblings("input").clear().type(newPwd); 
     });
-    //.type(newPwd);
     cy.get("button.btn-shadow-primary").click();
+    cy.window();
+    cy.wait(2000);
   }
+  //  checkOrgAdminPage(){
+    // const getIframeDocument = () => {
+    //   return cy
+    //   .get('#frame_id')
+    //   .its('npm install -D cypress-iframe').should('exist')
+    // }
+    // const getIframeBody = () => {
+    //   return getIframeDocument()
+    //   .its('body').should('not.be.undefined')
+    //   .then(cy.wrap)
+    // }
+  //   cy.frameLoaded('#frame_id',{url:'https://test.sole.scot/supplier/preview/testabc'});
+  //   cy.iframe().find('div.blog-details-wrap').should('be.visible');
+   // cy.log(getIframeBody());
+   //getIframeBody().find("div.blog-details-wrap",{ timeout: 10000 }).invoke('text').should('eq','Hello World!');
+  // }
 }
 export default new adminPage();
