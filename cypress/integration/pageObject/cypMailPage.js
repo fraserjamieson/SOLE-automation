@@ -32,6 +32,14 @@ class adminPage {
         cy.writeFile('cypress/fixtures/link.json', { link: href })
        });
   }
+  clickHereToLogin(){
+    cy.get("table > tbody > tr > td > a").contains('Click Here to Login')
+     .invoke("removeAttr", "target")
+      .invoke("attr", "href")
+        .then(href => {
+          cy.writeFile('cypress/fixtures/link.json', { link: href })
+         });
+    }
   setPwd(){
     var newPwd = Cypress.env('password');
    var pwd = cy.get("div.container").contains('New Password')

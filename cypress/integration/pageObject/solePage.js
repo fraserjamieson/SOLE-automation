@@ -86,6 +86,14 @@ class logIn {
   editDetails(){
     cy.get('.page-title-actions > .mr-2 > .btn-shadow').click();      
   }
-  
+  globalSearch(fieldText){
+    cy.get('#search-global').clear().type(fieldText).type('{enter}');    
+  }
+  searchCat(typeName){
+    cy.get('.overlay-link > a').contains(typeName).click();    
+  }
+  subSearch(fieldText){
+    cy.get('.newsletter-form #subsearch').clear().type(fieldText).type('{enter}');    
+  }
 }
 export default new logIn();

@@ -54,7 +54,10 @@ class masterPage {
         cy.wait(1000);
         break;
       case "delete":
-        cy.get("td.justify-center.layout.px-0 > button").first().click();
+        cy.get("td.justify-center.layout.px-0 > button").first().click({force: true});
+        cy.on('window:confirm', (str) => {
+          expect(str).to.eq('Are you sure you want to delete this record?')
+        })
         cy.wait(1000);
         break;
       case "save":

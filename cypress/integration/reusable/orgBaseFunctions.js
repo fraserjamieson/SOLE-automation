@@ -70,10 +70,16 @@ import admn from "../pageObject/cypMailPage";
     var pwd = Cypress.env('mailpwd'),
      mailName = Cypress.env('mail');
      
-     cy.visit("https://login.aol.com/");
-//https://mail.aol.co.uk/
+     cy.visit("https://login.aol.com/"); 
+     //cy.get(".vp-cc-element.bottom.vp-hide").setAttribute('style', 'display:none;')
     admn.enterMailId(mailName);
-    admn.enterMailPwd(pwd);  
+    admn.enterMailPwd(pwd); 
+    cy.get('.vp-cc-element.bottom.vp-hide').then(function ($style) {
+      $style[0].setAttribute(
+        "style",
+        "display:none;"
+      )
+   }); 
     admn.goToMail();
   }
  
