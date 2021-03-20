@@ -27,12 +27,6 @@ class customer {
     const getIframeDocument = () => {
         return cy
         .get('iframe[role="presentation"]')
-        // Cypress yields jQuery element, which has the real
-        // DOM element under property "0".
-        // From the real DOM iframe element we can get
-        // the "document" element, it is stored in "contentDocument" property
-        // Cypress "its" command can access deep properties using dot notation
-        // https://on.cypress.io/its
         .its('0.contentDocument').should('exist')
       }
       
@@ -41,13 +35,9 @@ class customer {
         return getIframeDocument()
         // automatically retries until body is loaded
         .its('body').should('not.be.undefined')
-        // wraps "body" DOM element to allow
-        // chaining more Cypress commands, like ".find(...)"
         .then(cy.wrap)
       }
       getIframeBody().find('#recaptcha-anchor').click();
-    //cy.iframe().find('#recaptcha-anchor > div.recaptcha-checkbox-border').should('be.visible').click()
-    //cy.get('#recaptcha-anchor > div.recaptcha-checkbox-border').click();
   }
   tickConfirm() {
     cy.get('div:nth-child(8) > input[type=checkbox]').click();
@@ -98,14 +88,10 @@ class customer {
     });
   }
   clearProfileDetail(fieldName) {
-    //cy.get(".control-group ")
     var field = cy.get(".col-12 .mandatory").contains(fieldName).siblings("div")
-    // .within(() => {
-    //   field.siblings("div")
       .within(() => {
         field.children("input").clear(); 
       }); 
-    //});
   }
   addProfileDetail(fieldName,fieldText) {
     var field = cy.get("div.col-12").contains(fieldName).siblings("div")
@@ -114,7 +100,6 @@ class customer {
     });
   }
   selectGender(fieldText) {
-    //var field = cy.get("div.col-12").contains('Gender').siblings("div")
     cy.get('select')
   .select(fieldText , { force: true })
   .invoke('val')
@@ -139,5 +124,65 @@ class customer {
       expect(str).to.eq('Do you really want to delete this address?')
     })
   }
+  manageShopBtn() {
+    cy.get("div.mb-3.card").contains('Manage Shop')
+    .invoke("removeAttr", "target")
+    .click();
+    Cypress.on("uncaught:exception", (err, runnable) => {
+      // returning false here prevents Cypress from
+      // failing the test
+      return false;
+    });
+  }
+  dashboardManu(option) {
+    cy.get(".menubar > li ").contains(option).click({force: true});
+  }
+  addProduct() {
+    cy.get(" div.page-action > a").click();
+  }
+   selectProductType(typeName){ 
+    cy.get('#type').select(typeName);                              
+   }
+   selectAttrFamly(typeName){ 
+    cy.get('#attribute_family_id').select(typeName);                              
+   }
+   addSKU(text){ 
+    cy.get('#sku').type(text);                             
+   }
+   saveProduct(){ 
+    cy.get(".btn").contains('Save Product').click();                           
+   }
+   productName(fieldText){  
+    cy.get('.content').scrollTo('top');   
+    Cypress.on("uncaught:exception", (err, runnable) => {     
+      return false;
+    });
+    cy.get("#name").type(fieldText);                           
+   }
+   urlKey(fieldText){ 
+    cy.get("#url_key").clear().type(fieldText);                           
+   }
+   selectSwitch(fieldText) {
+    var field = cy.get(".control-group.boolean").contains(fieldText)
+    .within(() => {  
+      field.children("label").click(); 
+    });
+  }
+  tableTitlecheckdwnldprdct() {
+    cy.get('table.table > thead >tr > th').should("contain.text", "Order Id"); 
+    cy.get('table.table > thead >tr > th').should("contain.text", "Title");
+    cy.get('table.table > thead >tr > th').should("contain.text", "Date");
+    cy.get('table.table > thead >tr > th').should("contain.text", "Status");
+    cy.get('table.table > thead >tr > th').should("contain.text", "Remaining Downloads");
+  }
+  tableTitlecheckordrprdct() {
+    cy.get('table.table > thead >tr > th').should("contain.text", "Supplier");
+    cy.get('table.table > thead >tr > th').should("contain.text", "Order ID"); 
+    cy.get('table.table > thead >tr > th').should("contain.text", "Date");
+    cy.get('table.table > thead >tr > th').should("contain.text", "Total");
+    cy.get('table.table > thead >tr > th').should("contain.text", "Status");
+    cy.get('table.table > thead >tr > th').should("contain.text", "Action");
+  }
+   //
 }
 export default new customer();

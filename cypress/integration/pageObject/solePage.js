@@ -86,5 +86,6 @@ class logIn {
   editDetails(){
     cy.get('.page-title-actions > .mr-2 > .btn-shadow').click();      
   }
+  
 }
 export default new logIn();

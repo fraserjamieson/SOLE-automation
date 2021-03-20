@@ -11,11 +11,11 @@ describe("Customer user operations ", () => {
     vatId = "INV01234567891",
     editedVatId = "INV09876543219",
     companyName = `ABC's`,
-    editedCompanyName = `XYZ's`,
-    streetAddress = "24 test street",
+    editedCompanyName = `X-YZ's "company"`,
+    streetAddress = `24 (test , street)`,
     city = "Dunbar",
     county = "Glasgow",
-    postalCode = "A1 8AA",
+    postalCode = "A1. 8AA",
     phone = "23456789",
     editedPhone = "987654321",
     cstFirstName = "Customer",
@@ -162,7 +162,7 @@ describe("Customer user operations ", () => {
     cy.get("div.card").should("contain.text", city);
     cy.get("div.card").should("contain.text", county);
     cy.get("div.card").should("contain.text", postalCode);
-    cy.get("div.card").should("contain.text", phone);
+    cy.get("div.card").should("contain.text", phone);    
   });
   it("TC_12_A customer can edit an address and add a company and VAT fields", () => {
     cst.selectMenu("Login");
@@ -186,6 +186,7 @@ describe("Customer user operations ", () => {
     cst.addressErrCheck("County");
     cst.addressErrCheck("Postal Code");
 
+    //TC_25_A customer can use the following characters in all fields when adding an address ( ) - \" ' . ,
     //add details
     cst.addAddressDetail("Company name", editedCompanyName);
     cst.addAddressDetail("First name", firstName);
@@ -201,6 +202,15 @@ describe("Customer user operations ", () => {
     cy.get("div.card").should("contain.text", editedCompanyName);
     cy.get("div.card").should("contain.text", editedPhone);
     cy.get("div.card").should("not.contain.text", phone);
+
+    //delete address for future tests
+    cst.goToCustAction("Profile");
+    cst.goToProfileOpt("Address");
+    cst.deletAddressBtn();
+    cy.get(".account-table-content > div").should(
+      "contain.text",
+      "You do not have any saved addresses here, please try to create it by clicking the add button."
+    );
   });
   it("TC_13_A customer can edit their profile and update all fields", () => {
     cst.selectMenu("Login");
@@ -233,9 +243,39 @@ describe("Customer user operations ", () => {
     cy.get(".table").should("contain.text", email);
     cy.get(".table").should("contain.text", phone);
   });
+  it("TC_19_A customer can view all downloads which they have purchased and download the purchase if it has not expired", () => {
+    cst.selectMenu("Login");
+    cstBasefunction.logIn(email);
+    cst.goToCustAction("Profile");
+    cst.goToProfileOpt("Downloadable Products"); 
 
+    //check table of content
+    cst.tableTitlecheckdwnldprdct();
+    cy.get('table.table > tbody >tr').should("contain.text", "DOWNLOAD5");  
+    cy.get('table > tbody > tr > td:nth-child(2) > a').should("be.visible"); 
+  });
+  it("TC_20_A customer can view the statatus, date and details of purchases they have made.", () => {
+    cst.selectMenu("Login");
+    cstBasefunction.logIn(email);
+    cst.goToCustAction("Profile");
+    cst.goToProfileOpt("Orders"); 
+
+    //check table of content
+    cst.tableTitlecheckordrprdct();
+    cy.get('table.table > tbody >tr').should("contain.text", "Andrew’s – AutoParts & Accessories");  
+    cy.get('table > tbody > tr > td:nth-child(5)').should("contain.text", "Processing");
+    cy.get('table > tbody > tr > td:nth-child(6)').should("be.visible");  
+  });
+  it("TC_22_A customer can view their wish list", () => {
+    cst.selectMenu("Login");
+    cstBasefunction.logIn(email);
+    cst.goToCustAction("Profile");
+    cst.goToProfileOpt("Wishlist");
+    
+    //check wishlist
+    cy.get('.wishlist-container').should("contain.text", `18" Pink Alloy`); 
+  });
 });
-
 
 describe("customer cannot login using the Organisation login page ", () => {
   var email = Cypress.env("customerMail"),

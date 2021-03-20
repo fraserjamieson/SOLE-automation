@@ -15,8 +15,8 @@ import admn from "../pageObject/cypMailPage";
     solePg.logInBtn().click();
     //assertion
     solePg.adminMenu().should("be.visible");
-    solePg.setUpMenu().should("be.visible");
-    solePg.analyticsMenu().should("be.visible");
+    //solePg.setUpMenu().should("be.visible");
+    //solePg.analyticsMenu().should("be.visible");
   }
   //Log out function
   logOut() {
@@ -76,12 +76,6 @@ import admn from "../pageObject/cypMailPage";
     admn.enterMailPwd(pwd);  
     admn.goToMail();
   }
-  // consentHandel(){
-  //     if (cy.title().contains('AOL is now a part of Verizon Media') ) {
-  //       cy.get("div.actions.couple > form > button").click();
-  //     } else {
-  //       // do nothing
-  //     } 
- // }
+ 
 }
 export default new baseFunction();
