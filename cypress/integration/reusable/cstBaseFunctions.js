@@ -9,8 +9,8 @@ logIn(email) {
   cst.password(pwd);
   cst.signIn();
   cy.get('.dropbtn').should('contain.text', 'Customer ABC');
-  cy.get(".menu1>a").contains('Home',{timeout: 10000}); 
-  cy.get("#search-middle").should("be.visible");
+ // cy.get(".menu1>a").contains('Home',{timeout: 10000}); 
+ // cy.get("#search-middle").should("be.visible");
   cy.wait(3000);
 }
   //Log out function
