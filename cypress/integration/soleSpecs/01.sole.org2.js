@@ -3,7 +3,7 @@ import solePg from "../pageObject/solePage";
 import masterPg from "../pageObject/masterPage";
 import cst from "../pageObject/customerPage";
 import admn from "../pageObject/cypMailPage";
-describe("Organisation Admin user operations ", () => {
+xdescribe("Organisation Admin user operations ", () => {
   var emailID = basefunction.getUniqueEmailID(),
     admnMail = Cypress.env("mail"),
     email = Cypress.env("email");
