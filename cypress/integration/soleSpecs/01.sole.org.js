@@ -5,7 +5,7 @@ import admn from "../pageObject/cypMailPage";
 var Promise = require("es6-promise").Promise;
 describe("Organisation Admin user operations ", () => {
   var emailID = basefunction.getUniqueEmailID(),
-  cstUrl = Cypress.env("cstUrl"),
+    cstUrl = Cypress.env("cstUrl"),
     admnMail = Cypress.env("mail"),
     email = Cypress.env("email");
 
@@ -113,7 +113,7 @@ describe("Organisation Admin user operations ", () => {
     masterPg.selectAction("org detail");
 
     //org details
-    cy.get('.mb-3.card').should("contain.text", `Test-A'B & C`);     
+    cy.get(".mb-3.card").should("contain.text", `Test-A'B & C`);
   });
   it("TC_09_The new Org can be found on the main site and full details viewed by searching", () => {
     cy.visit(cstUrl);
@@ -125,7 +125,7 @@ describe("Organisation Admin user operations ", () => {
     cy.wait(1000);
     solePg.globalSearch("Test-A'B & C");
     //check result
-    cy.get('.col-md-6.col-xs-12').should("contain.text", `Test-A'B & C`);
+    cy.get(".col-md-6.col-xs-12").should("contain.text", `Test-A'B & C`);
   });
   it("TC_10_The new Org can be found on the main site and full details viewed by using the semi circle category option", () => {
     cy.visit(cstUrl);
@@ -138,7 +138,7 @@ describe("Organisation Admin user operations ", () => {
     solePg.searchCat("Shop Local");
     solePg.subSearch("Test-A'B & C");
     //check result
-    cy.get('.row#filterresult').should("contain.text", `Test-A'B & C`);
+    cy.get(".row#filterresult").should("contain.text", `Test-A'B & C`);
   });
   it("TC_14_Delete org for future test execution", () => {
     basefunction.login(email);

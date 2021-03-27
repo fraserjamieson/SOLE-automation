@@ -2,8 +2,7 @@ import basefunction from "../reusable/orgBaseFunctions";
 let elementIDMap = new Map();
 
 class masterPage {
-  
-  navigateTo(menu) { 
+  navigateTo(menu) {
     var menuOption = menu.toLowerCase();
     switch (menuOption) {
       case "allpost":
@@ -30,17 +29,17 @@ class masterPage {
       case "placements":
         basefunction.clickOnElement("/admin/placements");
         break;
-        case "shopsetup":
-          cy.get("div.vsm-list .vsm-title").contains("Shop").click();
-          cy.get(".vsm-title").contains("Your Shop").click();
-          cy.get(".app-page-title").should("contain.text", "Manage Shop");
-          cy.wait(1000);
+      case "shopsetup":
+        cy.get("div.vsm-list .vsm-title").contains("Shop").click();
+        cy.get(".vsm-title").contains("Your Shop").click();
+        cy.get(".app-page-title").should("contain.text", "Manage Shop");
+        cy.wait(1000);
         break;
     }
   }
   //Method to click add new button
   addNewBtn() {
-    var addNew = cy.get("button.mb-2",{ timeout: 10000 }).contains("Add New");
+    var addNew = cy.get("button.mb-2", { timeout: 10000 }).contains("Add New");
     return addNew;
   }
   selectAction(action) {
@@ -54,10 +53,12 @@ class masterPage {
         cy.wait(1000);
         break;
       case "delete":
-        cy.get("td.justify-center.layout.px-0 > button").first().click({force: true});
-        cy.on('window:confirm', (str) => {
-          expect(str).to.eq('Are you sure you want to delete this record?')
-        })
+        cy.get("td.justify-center.layout.px-0 > button")
+          .first()
+          .click({ force: true });
+        cy.on("window:confirm", (str) => {
+          expect(str).to.eq("Are you sure you want to delete this record?");
+        });
         cy.wait(1000);
         break;
       case "save":
@@ -99,20 +100,26 @@ class masterPage {
   tickBox(fieldName) {
     var name = cy
       .get("label.v-label")
-      .contains(fieldName).parent('div').click();
+      .contains(fieldName)
+      .parent("div")
+      .click();
   }
   enterHeader() {
-    cy.get("#orgheader > .ql-container > .ql-editor").clear().type("Hello World!");   
+    cy.get("#orgheader > .ql-container > .ql-editor")
+      .clear()
+      .type("Hello World!");
   }
   enterDesc() {
-    cy.get("#orgdesc > .ql-container > .ql-editor").clear().type("This is Description.");   
+    cy.get("#orgdesc > .ql-container > .ql-editor")
+      .clear()
+      .type("This is Description.");
   }
   enterSearchInput(fieldText) {
     var searchText = cy
       .get("div.v-text-field__slot")
       .contains("Search")
       .within(() => {
-        searchText.siblings("input").type(fieldText); 
+        searchText.siblings("input").type(fieldText);
       });
   }
   //select currency
@@ -130,7 +137,6 @@ class masterPage {
       });
     });
   }
-
   clickOnElement(fieldName) {
     var selectField = cy
       .get(".container .v-select__slot")
@@ -141,7 +147,7 @@ class masterPage {
   }
   closeVdoPopup() {
     //cy.get('#pendo-g-QZUspU5fAAZkKBOXyjp9na0smDw');
-        cy.get('#pendo-button-ffc8b1bc').click();
+    cy.get("#pendo-button-ffc8b1bc").click();
   }
 }
 export default new masterPage();

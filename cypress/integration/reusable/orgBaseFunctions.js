@@ -1,13 +1,13 @@
 import solePg from "../pageObject/solePage";
 import admn from "../pageObject/cypMailPage";
 // let dataMap = new Map();
- class baseFunction {
-//   //Reusable methods
+class baseFunction {
+  //   //Reusable methods
   login(email) {
-    var pwd = Cypress.env('password');
+    var pwd = Cypress.env("password");
     //lounch baseURL
-    cy.visit('/');
-   // cy.title().should("eq", "Local High Street"); 
+    cy.visit("/");
+    // cy.title().should("eq", "Local High Street");
     //Enter credentials
     solePg.email().type(email);
     solePg.password().type(pwd);
@@ -66,22 +66,18 @@ import admn from "../pageObject/cypMailPage";
       masterPg.enterSearchInput(returnText);
     });
   }
-  mailLoging(){
-    var pwd = Cypress.env('mailpwd'),
-     mailName = Cypress.env('mail');
-     
-     cy.visit("https://login.aol.com/"); 
-     //cy.get(".vp-cc-element.bottom.vp-hide").setAttribute('style', 'display:none;')
+  mailLoging() {
+    var pwd = Cypress.env("mailpwd"),
+      mailName = Cypress.env("mail");
+
+    cy.visit("https://login.aol.com/");
+    //cy.get(".vp-cc-element.bottom.vp-hide").setAttribute('style', 'display:none;')
     admn.enterMailId(mailName);
-    admn.enterMailPwd(pwd); 
-    cy.get('.vp-cc-element.bottom.vp-hide').then(function ($style) {
-      $style[0].setAttribute(
-        "style",
-        "display:none;"
-      )
-   }); 
+    admn.enterMailPwd(pwd);
+    cy.get(".vp-cc-element.bottom.vp-hide").then(function ($style) {
+      $style[0].setAttribute("style", "display:none;");
+    });
     admn.goToMail();
   }
- 
 }
 export default new baseFunction();

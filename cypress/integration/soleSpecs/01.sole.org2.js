@@ -9,21 +9,18 @@ xdescribe("Organisation Admin user operations ", () => {
     email = Cypress.env("email");
 
   it("TC_01_Local Admin can create and save a new Org", () => {
-    
     basefunction.login(admnMail);
     masterPg.navigateTo("shopsetup");
-   // masterPg.closeVdoPopup();
+    // masterPg.closeVdoPopup();
     cst.manageShopBtn();
-    cst.dashboardManu('Catalog');
+    cst.dashboardManu("Catalog");
     cst.addProduct();
-    cst.selectProductType('Downloadable');
-    cst.selectAttrFamly('Default');
+    cst.selectProductType("Downloadable");
+    cst.selectAttrFamly("Default");
     cst.addSKU(basefunction.getRandomNumber(4));
     cst.saveProduct();
-    cst.productName('Prod-A');
+    cst.productName("Prod-A");
     cst.urlKey(basefunction.getRandomNumber(4));
-    cst.selectSwitch('New');
-    
+    cst.selectSwitch("New");
   });
- 
 });

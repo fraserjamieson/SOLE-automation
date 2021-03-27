@@ -1,18 +1,18 @@
 import cst from "../pageObject/customerPage";
 
 // let dataMap = new Map();
- class cstBaseFunction {
-//   //Reusable methods
-logIn(email) {
-  var pwd = Cypress.env('mailpwd');
-  cst.email(email);
-  cst.password(pwd);
-  cst.signIn();
-  cy.get('.dropbtn').should('contain.text', 'Customer ABC');
- // cy.get(".menu1>a").contains('Home',{timeout: 10000}); 
- // cy.get("#search-middle").should("be.visible");
-  cy.wait(3000);
-}
+class cstBaseFunction {
+  //Reusable methods
+  logIn(email) {
+    var pwd = Cypress.env("mailpwd");
+    cst.email(email);
+    cst.password(pwd);
+    cst.signIn();
+    cy.get(".dropbtn").should("contain.text", "Customer ABC");
+    // cy.get(".menu1>a").contains('Home',{timeout: 10000});
+    // cy.get("#search-middle").should("be.visible");
+    cy.wait(3000);
+  }
   //Log out function
   logOut() {
     solePg.profileIcon().click();
@@ -21,22 +21,20 @@ logIn(email) {
     solePg.email().should("be.visible");
     solePg.password().should("be.visible");
   }
- //Register function
- register(firstName,lastName,email) {
-  var pwd = Cypress.env('password');
- 
-  cst.firstName(firstName);
-  cst.lastName(lastName);
-  cst.email(email);
-  cst.password(pwd);
-  cst.reTypePwd(pwd);
-  cst.reCaptcha();
-  cst.tickConfirm();
-  cst.tickIagree();
-  cst.register();
-  
-}
+  //Register function
+  register(firstName, lastName, email) {
+    var pwd = Cypress.env("password");
 
+    cst.firstName(firstName);
+    cst.lastName(lastName);
+    cst.email(email);
+    cst.password(pwd);
+    cst.reTypePwd(pwd);
+    cst.reCaptcha();
+    cst.tickConfirm();
+    cst.tickIagree();
+    cst.register();
+  }
   getRandomString(length) {
     var result = "";
     var characters =
@@ -77,16 +75,15 @@ logIn(email) {
       masterPg.enterSearchInput(returnText);
     });
   }
-  mailLoging(){
-    var pwd = Cypress.env('mailpwd'),
-     mailName = Cypress.env('mail');
-     
-     cy.visit("https://login.aol.com/");
-//https://mail.aol.co.uk/
+  mailLoging() {
+    var pwd = Cypress.env("mailpwd"),
+      mailName = Cypress.env("mail");
+
+    cy.visit("https://login.aol.com/");
+    //https://mail.aol.co.uk/
     admn.enterMailId(mailName);
-    admn.enterMailPwd(pwd);  
+    admn.enterMailPwd(pwd);
     admn.goToMail();
   }
- 
 }
 export default new cstBaseFunction();

@@ -20,8 +20,8 @@ describe("Customer user operations ", () => {
     editedPhone = "987654321",
     cstFirstName = "Customer",
     cstLastName = "ABC",
-    gender = 'Female',
-    DOB = '1999-12-31';
+    gender = "Female",
+    DOB = "1999-12-31";
 
   beforeEach(function () {
     cy.visit(cstUrl);
@@ -113,7 +113,7 @@ describe("Customer user operations ", () => {
     cst.addAddressDetail("Postal Code", postalCode);
     cst.addAddressDetail("Phone", editedPhone);
     cst.saveBtn();
-    cy.get('div.alert').should('contain.text','Success!');
+    cy.get("div.alert").should("contain.text", "Success!");
     cy.get("div.card").should("contain.text", editedPhone);
     cy.get("div.card").should("not.contain.text", phone);
   });
@@ -143,7 +143,7 @@ describe("Customer user operations ", () => {
     cst.addressErrCheck("County");
     cst.addressErrCheck("Postal Code");
 
-   // add details
+    // add details
     cst.addAddressDetail("Company name", companyName);
     cst.addAddressDetail("First name", firstName);
     cst.addAddressDetail("Last name", lastName);
@@ -162,7 +162,7 @@ describe("Customer user operations ", () => {
     cy.get("div.card").should("contain.text", city);
     cy.get("div.card").should("contain.text", county);
     cy.get("div.card").should("contain.text", postalCode);
-    cy.get("div.card").should("contain.text", phone);    
+    cy.get("div.card").should("contain.text", phone);
   });
   it("TC_12_A customer can edit an address and add a company and VAT fields", () => {
     cst.selectMenu("Login");
@@ -218,12 +218,12 @@ describe("Customer user operations ", () => {
     cst.goToCustAction("Profile");
     cst.goToProfileOpt("Profile");
     cst.editProfileBtn();
-    cst.clearProfileDetail('First Name');
-    cst.clearProfileDetail('Contact Email');
+    cst.clearProfileDetail("First Name");
+    cst.clearProfileDetail("Contact Email");
 
     //error message check
-    cst.profileErrCheck('first_name');
-    cst.profileErrCheck('email');
+    cst.profileErrCheck("first_name");
+    cst.profileErrCheck("email");
 
     //add details
     cst.addProfileDetail("First Name", cstFirstName);
@@ -247,46 +247,54 @@ describe("Customer user operations ", () => {
     cst.selectMenu("Login");
     cstBasefunction.logIn(email);
     cst.goToCustAction("Profile");
-    cst.goToProfileOpt("Downloadable Products"); 
+    cst.goToProfileOpt("Downloadable Products");
 
     //check table of content
     cst.tableTitlecheckdwnldprdct();
-    cy.get('table.table > tbody >tr').should("contain.text", "DOWNLOAD5");  
-    cy.get('table > tbody > tr > td:nth-child(2) > a').should("be.visible"); 
+    cy.get("table.table > tbody >tr").should("contain.text", "DOWNLOAD5");
+    cy.get("table > tbody > tr > td:nth-child(2) > a").should("be.visible");
   });
   it("TC_20_A customer can view the statatus, date and details of purchases they have made.", () => {
     cst.selectMenu("Login");
     cstBasefunction.logIn(email);
     cst.goToCustAction("Profile");
-    cst.goToProfileOpt("Orders"); 
+    cst.goToProfileOpt("Orders");
 
     //check table of content
     cst.tableTitlecheckordrprdct();
-    cy.get('table.table > tbody >tr').should("contain.text", "Andrew’s – AutoParts & Accessories");  
-    cy.get('table > tbody > tr > td:nth-child(5)').should("contain.text", "Processing");
-    cy.get('table > tbody > tr > td:nth-child(6)').should("be.visible");  
+    cy.get("table.table > tbody >tr").should(
+      "contain.text",
+      "Andrew’s – AutoParts & Accessories"
+    );
+    cy.get("table > tbody > tr > td:nth-child(5)").should(
+      "contain.text",
+      "Processing"
+    );
+    cy.get("table > tbody > tr > td:nth-child(6)").should("be.visible");
   });
   it("TC_22_A customer can view their wish list", () => {
     cst.selectMenu("Login");
     cstBasefunction.logIn(email);
     cst.goToCustAction("Profile");
     cst.goToProfileOpt("Wishlist");
-    
+
     //check wishlist
-    cy.get('.wishlist-container').should("contain.text", `18" Pink Alloy`); 
+    cy.get(".wishlist-container").should("contain.text", `18" Pink Alloy`);
   });
 });
 
 describe("customer cannot login using the Organisation login page ", () => {
   var email = Cypress.env("customerMail"),
-   pwd = Cypress.env('mailpwd');
+    pwd = Cypress.env("mailpwd");
   it("TC_15_A customer cannot login using the Organisation login page", () => {
-    cy.visit('/');
+    cy.visit("/");
     solePg.email().type(email);
     solePg.password().type(pwd);
     solePg.logInBtn().click();
     //check error
-    cy.get(".error").should("contain.text",'These credentials do not match our records.');
+    cy.get(".error").should(
+      "contain.text",
+      "These credentials do not match our records."
+    );
   });
 });
- 
