@@ -1,4 +1,5 @@
 import cst from "../pageObject/customerPage";
+import admn from "../pageObject/cypMailPage";
 
 // let dataMap = new Map();
 class cstBaseFunction {
@@ -77,7 +78,7 @@ class cstBaseFunction {
   }
   mailLoging() {
     var pwd = Cypress.env("mailpwd"),
-      mailName = Cypress.env("mail");
+      mailName = Cypress.env("customerMail");
 
     cy.visit("https://login.aol.com/");
     //https://mail.aol.co.uk/

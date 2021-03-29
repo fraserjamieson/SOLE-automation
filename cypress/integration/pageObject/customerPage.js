@@ -214,6 +214,18 @@ class customer {
     cy.get("table.table > thead >tr > th").should("contain.text", "Status");
     cy.get("table.table > thead >tr > th").should("contain.text", "Action");
   }
+  forgotMyPwd() {
+    cy.get("a.badge").contains("I forgot my password").click();
+  }
+  forgotMyPwdEmail(email) {
+    cy.get("[name='email']").type(email);
+    cy.get(".btn").contains("Send Password Reset Link").click();
+    cy.get(".alert").should(
+      "contain.text",
+      `We have e-mailed your password reset link!`
+    );
+
+  }
   //
 }
 export default new customer();
