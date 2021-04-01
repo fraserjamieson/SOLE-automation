@@ -11,7 +11,7 @@ describe('Stan\'s Spec', () => {
     //       .should('include', '/admin/organisation')
     // })
 
-    it('changes adming password from the menu', () => {
+    it('changes admin password from the menu', () => {
         cy.visit('/')
           .get('input[name="email"]').type('stasoletesting+Around@gmail.com')
           .get('input[name="password"]').type('letitsnow1')
@@ -26,5 +26,6 @@ describe('Stan\'s Spec', () => {
           .get('input[name="email"]').type('stasoletesting+Around@gmail.com')
           .get('input[name="password"]').type('letitsnow1')
           .get('button').click()
+          .url().should('include', '/admin/preview')
     })
 })
