@@ -45,7 +45,7 @@ class adminPage {
         cy.writeFile("cypress/fixtures/link.json", { link: href });
       });
   }
-  resetPwd() {
+  newPwdlink() {
     cy.get("table > tbody > tr > td > a")
       .contains("Reset Password")
       .invoke("removeAttr", "target")
@@ -75,7 +75,7 @@ class adminPage {
   resrePwdNotification() {
     cy.get(".subjectLine").should("contain.text", "Reset Password Notification");   
   }
-  resetPwd(email) {
+  newPWD(email) {
     var newPwd = Cypress.env("mailpwd");
     cy.get("[name='email']").type(email);
     cy.get("[placeholder='Password']").type(newPwd);

@@ -292,7 +292,7 @@ describe("Customer user operations ", () => {
   });
 });
 
-xdescribe("customer user other scenarios ", () => {
+describe("customer user other scenarios ", () => {
   var email = Cypress.env("customerMail"),
     pwd = Cypress.env("mailpwd");
   it("TC_15_A customer cannot login using the Organisation login page", () => {
@@ -303,7 +303,7 @@ xdescribe("customer user other scenarios ", () => {
     //check error
     cy.get(".error").should(
       "contain.text",
-      "These credentials do not match our records."
+      "No Associated Organisation found."
     );
   });
   it("TC_15.01_A customer can request a password reset from the I forgot my password link on the login page.", () => {
@@ -320,18 +320,38 @@ xdescribe("customer user other scenarios ", () => {
     cstBasefunction.mailLoging();
     admn.selectFirstMail();
     admn.resrePwdNotification();
-    admn.resetPwd();
+    admn.newPwdlink();
     admn.mailLogout();
   });
   it("TC_15.02_A customer can set a password by received reset email from the I forgot my password link on the login page.", () => {
     cy.readFile("cypress/fixtures/link.json").then((url) => {
       cy.visit(url.link);
     });
-    admn.resetPwd(email);
+    admn.newPWD(email);
     Cypress.on("uncaught:exception", (err, runnable) => {
       return false;
     });
     cy.wait(1000);
     cy.writeFile("cypress/fixtures/link.json", { flag: "a+" });
+    cst.goToCustAction("Logout");
+    cy.wait(2000);
   });
+});
+
+xdescribe("customer user other scenarios ", () => {
+  var email = Cypress.env("customerMail"),
+    pwd = Cypress.env("mailpwd");
+  it("TC_15_A customer cannot login using the Organisation login page", () => {
+    cy.visit("https://admintest.sole.scot/admin/");
+    solePg.email().type('stasoletesting+flora@gmail.com');
+    solePg.password().type('letitsnow1');
+    solePg.logInBtn().click();
+    //check error
+    cy.get(':nth-child(2) > .vsm-link').click();
+    cy.get('.vsm-link > .vsm-title').contains('Specialists').click();
+    cy.get('.mb-2').click();
+    cy.get(':nth-child(3) > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-select__selections').click();
+    cy.get("div.v-list-item__content").contains(fieldText).click();
+  });
+  
 });

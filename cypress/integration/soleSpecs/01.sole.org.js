@@ -15,12 +15,16 @@ describe("Organisation Admin user operations ", () => {
     basefunction.login(email);
     masterPg.navigateTo("local organisations");
     cy.wait(500);
-    masterPg.enterSearchInput("TestABC");
+    masterPg.enterSearchInput(admnMail);
    //var result = cy.get('table > tbody > tr > td > div');
    cy.get("body").then($body => {
 
     if($body.find('table > tbody > tr > td > div').length > 0){
-      masterPg.selectAction("delete"); 
+      let count = $body.find("table > tbody > tr > td > div").length;
+      while (count > 0) {
+        masterPg.selectAction("delete");
+        count = count - 1;
+      }    
     }else{
     }
     masterPg.addNewBtn().click();
