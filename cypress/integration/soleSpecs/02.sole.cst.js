@@ -338,20 +338,3 @@ describe("customer user other scenarios ", () => {
   });
 });
 
-xdescribe("customer user other scenarios ", () => {
-  var email = Cypress.env("customerMail"),
-    pwd = Cypress.env("mailpwd");
-  it("TC_15_A customer cannot login using the Organisation login page", () => {
-    cy.visit("https://admintest.sole.scot/admin/");
-    solePg.email().type('stasoletesting+flora@gmail.com');
-    solePg.password().type('letitsnow1');
-    solePg.logInBtn().click();
-    //check error
-    cy.get(':nth-child(2) > .vsm-link').click();
-    cy.get('.vsm-link > .vsm-title').contains('Specialists').click();
-    cy.get('.mb-2').click();
-    cy.get(':nth-child(3) > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-select__selections').click();
-    cy.get("div.v-list-item__content").contains(fieldText).click();
-  });
-  
-});
