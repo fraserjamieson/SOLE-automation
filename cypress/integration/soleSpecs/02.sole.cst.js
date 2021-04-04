@@ -47,7 +47,8 @@ describe("Customer user operations ", () => {
     cst.signInOnRegister();
     cstBasefunction.logIn(email);
   });
-  it("TC_09_A customer can add a new address (Company & VAT fields not populated)", () => {
+  it("TC_09_A customer can add a new address (Company & VAT fields not populated)" + 
+  "\nTC_16_A customer cannot save a new address if mandatory fields are not entered.", () => {
     cst.selectMenu("Login");
     cstBasefunction.logIn(email);
     cst.goToCustAction("Profile");
@@ -91,7 +92,8 @@ describe("Customer user operations ", () => {
     cy.get("div.card").should("contain.text", postalCode);
     cy.get("div.card").should("contain.text", phone);
   });
-  it("TC_11_A customer can edit an address (Company & VAT fields not populated)", () => {
+  it("TC_11_A customer can edit an address (Company & VAT fields not populated)"+
+  "\nTC_17_A customer cannot save an edited address if mandatory fields are not entered.", () => {
     cst.selectMenu("Login");
     cstBasefunction.logIn(email);
     cst.goToCustAction("Profile");
@@ -137,7 +139,8 @@ describe("Customer user operations ", () => {
       "You do not have any saved addresses here, please try to create it by clicking the add button."
     );
   });
-  it("TC_10_A customer can add a news address with the company and VAT fields populated.", () => {
+  it("TC_10_A customer can add a news address with the company and VAT fields populated."+
+  "\nTC_16_A customer cannot save a new address if mandatory fields are not entered.", () => {
     cst.selectMenu("Login");
     cstBasefunction.logIn(email);
     cst.goToCustAction("Profile");
@@ -173,7 +176,9 @@ describe("Customer user operations ", () => {
     cy.get("div.card").should("contain.text", postalCode);
     cy.get("div.card").should("contain.text", phone);
   });
-  it("TC_12_A customer can edit an address and add a company and VAT fields", () => {
+  it("TC_12_A customer can edit an address and add a company and VAT fields" + 
+  "\nTC_17_A customer cannot save an edited address if mandatory fields are not entered." +
+  "\nTC_25_A customer can use the following characters in all fields when adding an address ( ) - \" ' . ,", () => {
     cst.selectMenu("Login");
     cstBasefunction.logIn(email);
     cst.goToCustAction("Profile");
