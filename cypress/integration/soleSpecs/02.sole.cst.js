@@ -47,7 +47,7 @@ describe("Customer user operations ", () => {
     cst.signInOnRegister();
     cstBasefunction.logIn(email);
   });
-  it.only("TC_09_A customer can add a new address (Company & VAT fields not populated)", () => {
+  it("TC_09_A customer can add a new address (Company & VAT fields not populated)", () => {
     cst.selectMenu("Login");
     cstBasefunction.logIn(email);
     cst.goToCustAction("Profile");
