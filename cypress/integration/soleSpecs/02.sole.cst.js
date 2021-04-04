@@ -38,11 +38,11 @@ describe("Customer user operations ", () => {
     cst.goToCustAction("Logout");
     cy.wait(2000);
   });
-  xit("TC_07_A customer can log in via the Login link in the header", () => {
+  it("TC_07_A customer can log in via the Login link in the header", () => {
     cst.selectMenu("Login");
     cstBasefunction.logIn(email);
   });
-  xit("TC_08_A customer can log in via the link on the registration page", () => {
+  it("TC_08_A customer can log in via the link on the registration page", () => {
     cst.selectMenu("Register");
     cst.signInOnRegister();
     cstBasefunction.logIn(email);
