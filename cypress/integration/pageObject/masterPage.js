@@ -67,7 +67,7 @@ class masterPage {
         break;
       case "org detail":
         cy.get(
-          "td.justify-center.layout.px-0 > a.mr-2.router-link-exact-active.router-link-active"
+          " table > tbody > tr:nth-child(1) > td.justify-center.layout.px-0 > a.mr-2"
         ).click();
         cy.wait(1000);
         break;

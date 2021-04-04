@@ -75,6 +75,11 @@ class logIn {
       .contains("Claim Profile");
     return cypBtn;
   }
+  result() {
+   var result = cy.get('table > tbody > tr > td > div').length;
+   console.log(result);
+    return result;
+  }
   cypMsg() {
     cy.get(".v-card")
       .should("contain", "Claim Profile Confirmation")

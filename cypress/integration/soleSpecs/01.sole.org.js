@@ -10,9 +10,19 @@ describe("Organisation Admin user operations ", () => {
     email = Cypress.env("email");
 
   it("TC_01_Local Admin can create and save a new Org", () => {
+
+
     basefunction.login(email);
     masterPg.navigateTo("local organisations");
     cy.wait(500);
+    masterPg.enterSearchInput("TestABC");
+   //var result = cy.get('table > tbody > tr > td > div');
+   cy.get("body").then($body => {
+
+    if($body.find('table > tbody > tr > td > div').length > 0){
+      masterPg.selectAction("delete"); 
+    }else{
+    }
     masterPg.addNewBtn().click();
     solePg.selectOrgCategories("Community");
     solePg.selectOrgTags("Charity");
@@ -33,6 +43,8 @@ describe("Organisation Admin user operations ", () => {
     cy.wait(500);
     solePg.submitBtn().click();
     cy.wait(2000);
+    
+  });
   });
   it("TC_02_Local Admin can edit the new org and action the Claim Profile button", () => {
     basefunction.login(email);

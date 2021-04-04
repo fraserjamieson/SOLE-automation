@@ -5,27 +5,26 @@ import masterPg from "../pageObject/masterPage";
 import admn from "../pageObject/cypMailPage";
 
 var admnMail = Cypress.env("mail"),
-cstUrl = Cypress.env("cstUrl"),
-email = Cypress.env("customerMail"),
-firstName = "ABC",
-lastName = "XYZ",
-vatId = "INV01234567891",
-editedVatId = "INV09876543219",
-companyName = `ABC's`,
-editedCompanyName = `X-YZ's "company"`,
-streetAddress = `24 (test , street)`,
-city = "Dunbar",
-county = "Glasgow",
-postalCode = "A1. 8AA",
-phone = "23456789",
-editedPhone = "987654321",
-cstFirstName = "Customer",
-cstLastName = "ABC",
-gender = "Female",
-DOB = "1999-12-31";
+  cstUrl = Cypress.env("cstUrl"),
+  email = Cypress.env("customerMail"),
+  firstName = "ABC",
+  lastName = "XYZ",
+  vatId = "INV01234567891",
+  editedVatId = "INV09876543219",
+  companyName = `ABC's`,
+  editedCompanyName = `X-YZ's "company"`,
+  streetAddress = `24 (test , street)`,
+  city = "Dunbar",
+  county = "Glasgow",
+  postalCode = "A1. 8AA",
+  phone = "23456789",
+  editedPhone = "987654321",
+  cstFirstName = "Customer",
+  cstLastName = "ABC",
+  gender = "Female",
+  DOB = "1999-12-31";
 
 describe("Customer user operations ", () => {
- 
   beforeEach(function () {
     cy.visit(cstUrl);
     Cypress.on("uncaught:exception", (err, runnable) => {
@@ -39,20 +38,32 @@ describe("Customer user operations ", () => {
     cst.goToCustAction("Logout");
     cy.wait(2000);
   });
-  it("TC_07_A customer can log in via the Login link in the header", () => {
+  xit("TC_07_A customer can log in via the Login link in the header", () => {
     cst.selectMenu("Login");
     cstBasefunction.logIn(email);
   });
-  it("TC_08_A customer can log in via the link on the registration page", () => {
+  xit("TC_08_A customer can log in via the link on the registration page", () => {
     cst.selectMenu("Register");
     cst.signInOnRegister();
     cstBasefunction.logIn(email);
   });
-  it("TC_09_A customer can add a new address (Company & VAT fields not populated)", () => {
+  it.only("TC_09_A customer can add a new address (Company & VAT fields not populated)", () => {
     cst.selectMenu("Login");
     cstBasefunction.logIn(email);
     cst.goToCustAction("Profile");
     cst.goToProfileOpt("Address");
+
+    cy.get("body").then(($body) => {
+      if ($body.find(".card").length > 0) {
+        let count = $body.find(".card").length;
+        while (count > 0) {
+          cst.deletAddressBtn();
+          count = count - 1;
+        }
+      } else {
+      }
+    });
+
     cst.addAddressBtn();
     cst.saveBtn();
     //TC_16_A customer cannot save a new address if mandatory fields are not entered.
@@ -310,7 +321,7 @@ xdescribe("customer user other scenarios ", () => {
     admn.selectFirstMail();
     admn.resrePwdNotification();
     admn.resetPwd();
-    admn.mailLogout(); 
+    admn.mailLogout();
   });
   it("TC_15.02_A customer can set a password by received reset email from the I forgot my password link on the login page.", () => {
     cy.readFile("cypress/fixtures/link.json").then((url) => {
