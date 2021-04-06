@@ -29,6 +29,7 @@ describe("Organisation Admin user operations ", () => {
     }
     cy.wait(3000);
     masterPg.addNewBtn().click();
+    cy.wait(4000);
     solePg.selectOrgCategories("Community");
     solePg.selectOrgTags("Charity");
     solePg.selectBookingType("Delivery");
