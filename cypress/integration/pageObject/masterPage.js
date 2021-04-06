@@ -39,6 +39,7 @@ class masterPage {
   }
   //Method to click add new button
   addNewBtn() {
+    cy.wait(3000);
     var addNew = cy.get("button.mb-2", { timeout: 10000 }).contains("Add New");
     return addNew;
   }
