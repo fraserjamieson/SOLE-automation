@@ -52,7 +52,7 @@ describe("Organisation Admin user operations ", () => {
     
   });
   });
-  xit("TC_02_Local Admin can edit the new org and action the Claim Profile button", () => {
+  it("TC_02_Local Admin can edit the new org and action the Claim Profile button", () => {
     basefunction.login(email);
     masterPg.navigateTo("local organisations");
     masterPg.enterSearchInput("TestABC");
