@@ -50,7 +50,7 @@ describe("Organisation Admin user operations ", () => {
     
   });
   });
-  it("TC_02_Local Admin can edit the new org and action the Claim Profile button", () => {
+  xit("TC_02_Local Admin can edit the new org and action the Claim Profile button", () => {
     basefunction.login(email);
     masterPg.navigateTo("local organisations");
     masterPg.enterSearchInput("TestABC");
@@ -60,20 +60,20 @@ describe("Organisation Admin user operations ", () => {
     solePg.cypMsg();
     solePg.cypSuccessMsg(admnMail);
   });
-  it("TC_03.01_Org Admin can claim his profile from link recieved in mail", () => {
+  xit("TC_03.01_Org Admin can claim his profile from link recieved in mail", () => {
     basefunction.mailLoging();
     admn.selectFirstMail();
     admn.takeMeToSolePage();
     admn.mailLogout();
   });
-  it("TC_03.02_And can create password to access site", () => {
+  xit("TC_03.02_And can create password to access site", () => {
     cy.readFile("cypress/fixtures/link.json").then((url) => {
       cy.visit(url.link);
     });
     admn.setPwd();
     cy.writeFile("cypress/fixtures/link.json", { flag: "a+" });
   });
-  it("TC_04_Org Admin can edit their details by changing, adding and saving", () => {
+  xit("TC_04_Org Admin can edit their details by changing, adding and saving", () => {
     basefunction.login(admnMail);
     solePg.myDetails();
     solePg.editDetails();
@@ -99,25 +99,25 @@ describe("Organisation Admin user operations ", () => {
     solePg.submitBtn().click();
     //admn.checkOrgAdminPage(); //function not working
   });
-  it("TC_05_Org Admin can change their password", () => {
+  xit("TC_05_Org Admin can change their password", () => {
     basefunction.login(admnMail);
     solePg.resetPwd();
     admn.setPwd();
   });
-  it("TC_06.01_Org Admin can log back in using the link provided in the second email and can perform operations like add user, add opening hour,add booking setup", () => {
+  xit("TC_06.01_Org Admin can log back in using the link provided in the second email and can perform operations like add user, add opening hour,add booking setup", () => {
     basefunction.mailLoging();
     admn.selectFirstMail();
     admn.clickHereToLogin();
     admn.mailLogout();
   });
-  it("TC_06.02_Org Admin can log back in using the link provided in the second email and can perform operations like add user, add opening hour,add booking setup", () => {
+  xit("TC_06.02_Org Admin can log back in using the link provided in the second email and can perform operations like add user, add opening hour,add booking setup", () => {
     cy.readFile("cypress/fixtures/link.json").then((url) => {
       cy.visit(url.link);
     });
     basefunction.login(admnMail);
     cy.writeFile("cypress/fixtures/link.json", { flag: "a+" });
   });
-  it("TC_07.01_Local Admin can send a password reset email to Org Admin", () => {
+  xit("TC_07.01_Local Admin can send a password reset email to Org Admin", () => {
     basefunction.login(email);
     masterPg.navigateTo("local organisations");
     masterPg.enterSearchInput("Test-A'B & C");
@@ -126,13 +126,13 @@ describe("Organisation Admin user operations ", () => {
     solePg.pwdResetMsg(admnMail);
     solePg.pwdResetConfirmMsg(admnMail);
   });
-  it("TC_07.02_Local Admin can send a password reset email to Org Admin >> Confirm received email", () => {
+  xit("TC_07.02_Local Admin can send a password reset email to Org Admin >> Confirm received email", () => {
     basefunction.mailLoging();
     admn.selectFirstMail();
     admn.resrePwdNotification();
     admn.mailLogout();
   });
-  it("TC_08_Local Admin can view all the changes made by the Org Admin excluding Stripe and Booking details", () => {
+  xit("TC_08_Local Admin can view all the changes made by the Org Admin excluding Stripe and Booking details", () => {
     basefunction.login(email);
     masterPg.navigateTo("local organisations");
     masterPg.enterSearchInput("Test-A'B & C");
@@ -142,7 +142,7 @@ describe("Organisation Admin user operations ", () => {
     solePg.checkSrtipeAccountContent();
     solePg.checkSrtipeOpnHrsContent();
   });
-  it("TC_09_The new Org can be found on the main site and full details viewed by searching", () => {
+  xit("TC_09_The new Org can be found on the main site and full details viewed by searching", () => {
     cy.visit(cstUrl);
     Cypress.on("uncaught:exception", (err, runnable) => {
       // returning false here prevents Cypress from
@@ -154,7 +154,7 @@ describe("Organisation Admin user operations ", () => {
     //check result
     cy.get(".col-md-6.col-xs-12").should("contain.text", `Test-A'B & C`);
   });
-  it("TC_10_The new Org can be found on the main site and full details viewed by using the semi circle category option", () => {
+  xit("TC_10_The new Org can be found on the main site and full details viewed by using the semi circle category option", () => {
     cy.visit(cstUrl);
     Cypress.on("uncaught:exception", (err, runnable) => {
       // returning false here prevents Cypress from
@@ -167,7 +167,7 @@ describe("Organisation Admin user operations ", () => {
     //check result
     cy.get(".row#filterresult").should("contain.text", `Test-A'B & C`);
   });
-  it("TC_14_Delete org for future test execution", () => {
+  xit("TC_14_Delete org for future test execution", () => {
     basefunction.login(email);
     masterPg.navigateTo("local organisations");
     masterPg.enterSearchInput("Test-A'B & C");
