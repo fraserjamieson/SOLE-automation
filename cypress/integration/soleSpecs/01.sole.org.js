@@ -27,6 +27,7 @@ describe("Organisation Admin user operations ", () => {
       }    
     }else{
     }
+    cy.wait(3000);
     masterPg.addNewBtn().click();
     solePg.selectOrgCategories("Community");
     solePg.selectOrgTags("Charity");
