@@ -21,11 +21,17 @@ class adminPage {
   selectFirstMail() {
     cy.get("#dijit__Widget_22 > div.mailCount").click();
     cy.wait(2000);
-    cy.get("#dojox_grid__grid_GridView_0 #page-0 > div:nth-child(1)").click();
+    Cypress.on("uncaught:exception", (err, runnable) => {
+      // returning false here prevents Cypress from
+      // failing the test
+      return false;
+    });
+    cy.get("#dojox_grid__grid_GridView_0 #page-0 > div:nth-child(1)",{ timeout: 20000 }).click();
     cy.wait(3000);
   }
   mailLogout() {
     cy.get("span.signOutLink > a").click();
+    cy.wait(500);
   }
   takeMeToSolePage() {
     cy.get("table > tbody > tr > td > a")

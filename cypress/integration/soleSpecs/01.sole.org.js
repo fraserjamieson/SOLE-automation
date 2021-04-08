@@ -11,24 +11,21 @@ describe("Organisation Admin user operations ", () => {
 
   it("TC_01_Local Admin can create and save a new Org", () => {
 
-
     basefunction.login(email);
     masterPg.navigateTo("local organisations");
     cy.wait(500);
     masterPg.enterSearchInput(admnMail);
-   //var result = cy.get('table > tbody > tr > td > div');
+   
    cy.get("body").then($body => {
-
-    if($body.find('table > tbody > tr > td > div').length > 0){
-      let count = $body.find("table > tbody > tr > td > div").length;
+    if($body.find('td.justify-center.layout.px-0 > button').length > 0){
+      var count = $body.find("td.justify-center.layout.px-0 > button").length;
       while (count > 0) {
         masterPg.selectAction("delete");
-        count = count - 1;
-      }    
-    }else{
+        count= count-1;
+      } 
     }
     masterPg.addNewBtn().click();
-    cy.wait(4000);
+    cy.window({ timeout: 20000 });
     solePg.selectOrgCategories("Community");
     solePg.selectOrgTags("Charity");
     solePg.selectBookingType("Delivery");

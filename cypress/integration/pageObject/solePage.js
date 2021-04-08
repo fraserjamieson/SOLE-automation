@@ -30,6 +30,7 @@ class logIn {
     return cy.get("div.card-header");
   }
   selectOrgCategories(catName) {
+    cy.wait(2000);
     cy.get(
       ":nth-child(1) > .flex > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-select__selections"
     ).click();
