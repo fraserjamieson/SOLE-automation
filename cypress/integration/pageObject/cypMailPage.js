@@ -21,11 +21,17 @@ class adminPage {
   selectFirstMail() {
     cy.get("#dijit__Widget_22 > div.mailCount").click();
     cy.wait(2000);
-    cy.get("#dojox_grid__grid_GridView_0 #page-0 > div:nth-child(1)").click();
+    Cypress.on("uncaught:exception", (err, runnable) => {
+      // returning false here prevents Cypress from
+      // failing the test
+      return false;
+    });
+    cy.get("#dojox_grid__grid_GridView_0 #page-0 > div:nth-child(1)",{ timeout: 20000 }).click();
     cy.wait(3000);
   }
   mailLogout() {
     cy.get("span.signOutLink > a").click();
+    cy.wait(500);
   }
   takeMeToSolePage() {
     cy.get("table > tbody > tr > td > a")
@@ -39,6 +45,15 @@ class adminPage {
   clickHereToLogin() {
     cy.get("table > tbody > tr > td > a")
       .contains("Click Here to Login")
+      .invoke("removeAttr", "target")
+      .invoke("attr", "href")
+      .then((href) => {
+        cy.writeFile("cypress/fixtures/link.json", { link: href });
+      });
+  }
+  newPwdlink() {
+    cy.get("table > tbody > tr > td > a")
+      .contains("Reset Password")
       .invoke("removeAttr", "target")
       .invoke("attr", "href")
       .then((href) => {
@@ -60,6 +75,18 @@ class adminPage {
         pwd2.siblings("input").clear().type(newPwd);
       });
     cy.get("button.btn-shadow-primary").click();
+    cy.window();
+    cy.wait(2000);
+  }
+  resrePwdNotification() {
+    cy.get(".subjectLine").should("contain.text", "Reset Password Notification");   
+  }
+  newPWD(email) {
+    var newPwd = Cypress.env("mailpwd");
+    cy.get("[name='email']").type(email);
+    cy.get("[placeholder='Password']").type(newPwd);
+    cy.get("[placeholder='Retype password']").type(newPwd);
+    cy.get(".btn").contains("Reset Password").click();
     cy.window();
     cy.wait(2000);
   }

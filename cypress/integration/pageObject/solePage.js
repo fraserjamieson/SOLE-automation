@@ -30,6 +30,7 @@ class logIn {
     return cy.get("div.card-header");
   }
   selectOrgCategories(catName) {
+    cy.wait(2000);
     cy.get(
       ":nth-child(1) > .flex > .v-input > .v-input__control > .v-input__slot > .v-select__slot > .v-select__selections"
     ).click();
@@ -75,6 +76,11 @@ class logIn {
       .contains("Claim Profile");
     return cypBtn;
   }
+  result() {
+   var result = cy.get('table > tbody > tr > td > div').length;
+   console.log(result);
+    return result;
+  }
   cypMsg() {
     cy.get(".v-card")
       .should("contain", "Claim Profile Confirmation")
@@ -117,6 +123,46 @@ class logIn {
       .clear()
       .type(fieldText)
       .type("{enter}");
+  }
+  selectResetMailPwd() {
+    cy.get("button.v-icon")
+      .contains("mail").click();
+  }
+  pwdResetMsg(email) {
+    cy.get("div.v-card")
+      .should("contain", "User password reset request")
+      .should(
+        "contain",
+        `This will send email to ${email} for resetting their password, Please confirm.`
+      );
+      cy.get("button.v-btn")
+      .contains("Confirm").click();
+  }
+  pwdResetConfirmMsg(email) {
+    cy.get("div.v-card")
+      .should("contain", "User password reset request")
+      .should(
+        "contain",
+        `Password reset email link has been sent to ${email}`
+      );
+      cy.get("button.v-btn")
+      .contains("Close").click();
+  }
+  checkSrtipeAccountContent() {
+    cy.get("button.tab-item").contains("Users").click();
+      cy.get("thead.v-data-table-header > tr > th")
+      .should(
+        "contain.text",
+        `NameEmailAdmin User?Action`
+      );
+  }
+  checkSrtipeOpnHrsContent() {
+    cy.get("button.tab-item").contains("Opening Hours").click();
+      cy.get("thead.v-data-table-header > tr > th")
+      .should(
+        "contain.text",
+        `DayClosedOpen 24 hrsTimingsActions`
+      );
   }
 }
 export default new logIn();

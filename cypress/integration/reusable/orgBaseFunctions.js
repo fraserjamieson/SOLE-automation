@@ -71,7 +71,6 @@ class baseFunction {
       mailName = Cypress.env("mail");
 
     cy.visit("https://login.aol.com/");
-    //cy.get(".vp-cc-element.bottom.vp-hide").setAttribute('style', 'display:none;')
     admn.enterMailId(mailName);
     admn.enterMailPwd(pwd);
     cy.get(".vp-cc-element.bottom.vp-hide").then(function ($style) {

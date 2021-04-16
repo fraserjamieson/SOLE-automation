@@ -2,7 +2,7 @@ import basefunction from "../reusable/orgBaseFunctions";
 import solePg from "../pageObject/solePage";
 import masterPg from "../pageObject/masterPage";
 import admn from "../pageObject/cypMailPage";
-var Promise = require("es6-promise").Promise;
+
 describe("Organisation Admin user operations ", () => {
   var emailID = basefunction.getUniqueEmailID(),
     cstUrl = Cypress.env("cstUrl"),
@@ -10,10 +10,22 @@ describe("Organisation Admin user operations ", () => {
     email = Cypress.env("email");
 
   it("TC_01_Local Admin can create and save a new Org", () => {
+
     basefunction.login(email);
     masterPg.navigateTo("local organisations");
     cy.wait(500);
+    masterPg.enterSearchInput(admnMail);
+   
+   cy.get("body").then($body => {
+    if($body.find('td.justify-center.layout.px-0 > button').length > 0){
+      var count = $body.find("td.justify-center.layout.px-0 > button").length;
+      while (count > 0) {
+        masterPg.selectAction("delete");
+        count= count-1;
+      } 
+    }
     masterPg.addNewBtn().click();
+    cy.window({ timeout: 20000 });
     solePg.selectOrgCategories("Community");
     solePg.selectOrgTags("Charity");
     solePg.selectBookingType("Delivery");
@@ -33,6 +45,8 @@ describe("Organisation Admin user operations ", () => {
     cy.wait(500);
     solePg.submitBtn().click();
     cy.wait(2000);
+    
+  });
   });
   it("TC_02_Local Admin can edit the new org and action the Claim Profile button", () => {
     basefunction.login(email);
@@ -101,19 +115,30 @@ describe("Organisation Admin user operations ", () => {
     basefunction.login(admnMail);
     cy.writeFile("cypress/fixtures/link.json", { flag: "a+" });
   });
-  it("TC_07_Local Admin can send a password reset email to Org Admin", () => {
+  it("TC_07.01_Local Admin can send a password reset email to Org Admin", () => {
     basefunction.login(email);
     masterPg.navigateTo("local organisations");
     masterPg.enterSearchInput("Test-A'B & C");
+    masterPg.selectAction("org detail");
+    solePg.selectResetMailPwd();
+    solePg.pwdResetMsg(admnMail);
+    solePg.pwdResetConfirmMsg(admnMail);
+  });
+  it("TC_07.02_Local Admin can send a password reset email to Org Admin >> Confirm received email", () => {
+    basefunction.mailLoging();
+    admn.selectFirstMail();
+    admn.resrePwdNotification();
+    admn.mailLogout();
   });
   it("TC_08_Local Admin can view all the changes made by the Org Admin excluding Stripe and Booking details", () => {
     basefunction.login(email);
     masterPg.navigateTo("local organisations");
     masterPg.enterSearchInput("Test-A'B & C");
     masterPg.selectAction("org detail");
-
     //org details
     cy.get(".mb-3.card").should("contain.text", `Test-A'B & C`);
+    solePg.checkSrtipeAccountContent();
+    solePg.checkSrtipeOpnHrsContent();
   });
   it("TC_09_The new Org can be found on the main site and full details viewed by searching", () => {
     cy.visit(cstUrl);

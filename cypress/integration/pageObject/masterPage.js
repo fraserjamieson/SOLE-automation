@@ -39,6 +39,7 @@ class masterPage {
   }
   //Method to click add new button
   addNewBtn() {
+    cy.wait(2000);
     var addNew = cy.get("button.mb-2", { timeout: 10000 }).contains("Add New");
     return addNew;
   }
@@ -48,8 +49,7 @@ class masterPage {
       case "edit":
         cy.wait(3000);
         cy.get(
-          "tr:nth-child(1) > td.justify-center.layout.px-0 > a:nth-child(1)"
-        ).click();
+          "tr:nth-child(1) > td.justify-center.layout.px-0 > a:nth-child(1)",{ timeout: 10000 }).click();
         cy.wait(1000);
         break;
       case "delete":
@@ -67,7 +67,7 @@ class masterPage {
         break;
       case "org detail":
         cy.get(
-          "td.justify-center.layout.px-0 > a.mr-2.router-link-exact-active.router-link-active"
+          " table > tbody > tr:nth-child(1) > td.justify-center.layout.px-0 > a.mr-2"
         ).click();
         cy.wait(1000);
         break;
