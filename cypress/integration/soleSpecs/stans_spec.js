@@ -13,7 +13,7 @@ describe('Stan\'s Spec', () => {
 
     it('changes admin password from the menu', () => {
         cy.visit('/')
-          .get('input[name="email"]').type('stasoletesting+Around@gmail.com')
+          .get('input[name="email"]').type('stasoletesting+Around@gmail.com') //can we store username and password in env variable which is stored in cypress.json file 
           .get('input[name="password"]').type('letitsnow1')
           .get('button').click()
           .get('#__BVID__15__BV_toggle_').click()
