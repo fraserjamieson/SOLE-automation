@@ -2,7 +2,9 @@ describe('Stan\'s Spec', () => {
     const localAdminEmail = Cypress.env("email"),
           localAdminPwd = Cypress.env("password"),
           aTWOrgMail = Cypress.env("aTWOrgMail"),
-          aTWOrgPwd = Cypress.env("aTWOrgPwd");
+          aTWOrgPwd = Cypress.env("aTWOrgPwd"),
+          orgUserEmail = Cypress.env("mail"),
+          newOrgUser = Cypress.env("newOrgUser");
 
     it('logs in as local admin', () => {
         cy.visit('/')
@@ -30,6 +32,21 @@ describe('Stan\'s Spec', () => {
           .url().should('include', '/admin/preview')
     })
 
+    it('creates a new organization user', () => {
+        cy.visit('/')
+          .get('input[name="email"]').type(aTWOrgMail)
+          .get('input[name="password"]').type(aTWOrgPwd)
+          .get('button').click()
+          .get('button').contains('Edit Details').click()
+          .wait(3000)
+          .get('.btn-actions-pane-right').click()
+          .get('.v-form>button').click()
+          .get('label').contains('Name').next().type(newOrgUser)
+          .get('label').contains('Email').next().type(orgUserEmail)
+          .get('button').contains('submit').click()
+          .get('td').contains(newOrgUser)
+    })
+
     // the following tests are not finished yet
 
     // it('sets organization opening hours', () => {
@@ -55,15 +72,4 @@ describe('Stan\'s Spec', () => {
     //       .get('.hours>li').eq(18).click()
     //       .get('.minutes>li').eq(1).click()
     // })
-
-    // it('creates a new organization user', () => {
-    //     cy.visit('/')
-    //       .get('input[name="email"]').type('stasoletesting+Around@gmail.com')
-    //       .get('input[name="password"]').type('letitsnow1')
-    //       .get('button').click()
-    //       .get('button').contains('Edit Details').click()
-    //       .pause()
-    //       .get('.btn-actions-pane-right').click()
-    //       .get('.v-form').click()
-    // }))
 })
