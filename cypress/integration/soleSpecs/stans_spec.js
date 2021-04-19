@@ -1,3 +1,6 @@
+import baseFunction from '../reusable/orgBaseFunctions';
+import adminPage from '../pageObject/cypMailPage';
+
 describe('Stan\'s Spec', () => {
     const localAdminEmail = Cypress.env("email"),
           localAdminPwd = Cypress.env("password"),
@@ -47,7 +50,25 @@ describe('Stan\'s Spec', () => {
           .get('td').contains(newOrgUser)
     })
 
+    it('sends a password reset email to the new organization user', () => {
+        cy.visit('/')
+          .get('input[name="email"]').type(aTWOrgMail)
+          .get('input[name="password"]').type(aTWOrgPwd)
+          .get('button').click()
+          .get('button').contains('Edit Details').click()
+          .wait(3000)
+          .get('.btn-actions-pane-right').click()
+          .get('td>button').contains('mail').click()
+          .get('span').contains('Confirm').click()
+    })
+
     // the following tests are not finished yet
+
+    // it('resets the password for the new organization user when receiving the password-reset email', () => {
+    //     baseFunction.mailLoging()
+    //     cy.get('span').contains('Inbox').click()
+    //     adminPage.selectFirstMail()
+    // })
 
     // it('sets organization opening hours', () => {
     //     cy.visit('/')
