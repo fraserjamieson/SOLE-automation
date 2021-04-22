@@ -7,9 +7,10 @@ describe('Stan\'s Spec', () => {
           aTWOrgMail = Cypress.env("aTWOrgMail"),
           aTWOrgPwd = Cypress.env("aTWOrgPwd"),
           orgUserEmail = Cypress.env("mail"),
-          newOrgUser = Cypress.env("newOrgUser");
+          newOrgUser = Cypress.env("newOrgUser"),
+          orgMailPasswd = Cypress.env("mailpwd");
 
-    it('logs in as local admin', () => {
+    xit('logs in as local admin', () => {
         cy.visit('/')
           .get('input[name="email"]').type(localAdminEmail)
           .get('input[name="password"]').type(localAdminPwd)
@@ -17,7 +18,7 @@ describe('Stan\'s Spec', () => {
           .url().should('include', '/admin/dashboard')
     })
 
-    it('changes organization admin password from the menu', () => {
+    xit('changes organization admin password from the menu', () => {
         cy.visit('/')
           .get('input[name="email"]').type(aTWOrgMail)
           .get('input[name="password"]').type(aTWOrgPwd)
@@ -35,7 +36,7 @@ describe('Stan\'s Spec', () => {
           .url().should('include', '/admin/preview')
     })
 
-    it('creates a new organization user', () => {
+    xit('creates a new organization user', () => {
         cy.visit('/')
           .get('input[name="email"]').type(aTWOrgMail)
           .get('input[name="password"]').type(aTWOrgPwd)
@@ -50,6 +51,7 @@ describe('Stan\'s Spec', () => {
           .get('td').contains(newOrgUser)
     })
 
+    // this test is connected with the one that follows, due to password reset expiring in 60 min
     it('sends a password reset email to the new organization user', () => {
         cy.visit('/')
           .get('input[name="email"]').type(aTWOrgMail)
@@ -62,35 +64,63 @@ describe('Stan\'s Spec', () => {
           .get('span').contains('Confirm').click()
     })
 
-    // the following tests are not finished yet
+    // this test is connected with the previous one, due to password reset expiring in 60 min
+    it('resets the password for the new organization user when receiving the password-reset email', () => {
+        //the following mailLoging() fails in this test, possibly due to some pages taking longer to load
+        baseFunction.mailLoging()
 
-    // it('resets the password for the new organization user when receiving the password-reset email', () => {
-    //     baseFunction.mailLoging()
-    //     cy.get('span').contains('Inbox').click()
-    //     adminPage.selectFirstMail()
-    // })
+        // // the following 8 lines are a failing modification of the above function with added cy.wait()
 
-    // it('sets organization opening hours', () => {
-    //     cy.visit('/')
-    //       .get('input[name="email"]').type('stasoletesting+Around@gmail.com')
-    //       .get('input[name="password"]').type('letitsnow1')
-    //       .get('button').click()
-    //       .get('button').contains('Edit Details').click()
-    //       .get('.btn-actions-pane-right').click()
-    //       .get('.tab-item').contains('Opening Hours').click()
-    //       .get('span').contains('Setup').click()
-    //       .get('a').contains('Add Hours').click()
-    //       .get('.week-day').contains('M').click()
-    //       .get('div>.week-day').eq(2).click()
-    //       .get('.week-day').contains('W').click()
-    //       .get('div>.week-day').eq(4).click()
-    //       .get('.week-day').contains('F').click()
-    //       .get('input[placeholder="Open Time"]').click()
-    //       .get('.hours>li').eq(8).click()
-    //       .get('.minutes>li').eq(1).click()
-    //       .get('.time-picker-overlay').click()
-    //       .get('input[placeholder="Close Time"]').click()
-    //       .get('.hours>li').eq(18).click()
-    //       .get('.minutes>li').eq(1).click()
-    // })
+        // cy.visit("https://login.aol.com/");
+        // adminPage.enterMailId(orgUserEmail);
+        // adminPage.enterMailPwd(orgMailPasswd);
+        // cy.wait(10000)
+        // cy.get(".vp-cc-element.bottom.vp-hide").then(function ($style) {
+        //   $style[0].setAttribute("style", "display:none;");
+        // })
+        // adminPage.goToMail()
+
+        // // the5 following 5 lines are another failing modification of the mailLoging() function
+
+        // cy.visit("https://login.aol.com/")
+        // adminPage.enterMailId(orgUserEmail)
+        // adminPage.enterMailPwd(orgMailPasswd)
+        // cy.wait(10000)
+        // cy.get(".mail-link>a").invoke("removeAttr", "target").click()
+
+        //   // the following lines have not been tested, due to the mailLoging() function
+
+        cy.get('span').contains('Inbox').click()
+        // adminPage.selectFirstMail()
+        // cy.get('a').contains('Reset Password').invoke('removeAttr', 'target').click()
+        //   .get('input[name="password"]').type(orgMailPasswd)
+        //   .get('input[name="password_confirmation"]').type(orgMailPasswd)
+        //   .get('button').contains('Reset Password').click()
+        //   .get('div').contains('Supplier').prev().should('include', newOrgUser)
+    })
+
+    // the following test is not finished yet
+    xit('sets organization opening hours', () => {
+        cy.visit('/')
+          .get('input[name="email"]').type('stasoletesting+Around@gmail.com')
+          .get('input[name="password"]').type('letitsnow1')
+          .get('button').click()
+          .get('button').contains('Edit Details').click()
+          .get('.btn-actions-pane-right').click()
+          .get('.tab-item').contains('Opening Hours').click()
+          .get('span').contains('Setup').click()
+          .get('a').contains('Add Hours').click()
+          .get('.week-day').contains('M').click()
+          .get('div>.week-day').eq(2).click()
+          .get('.week-day').contains('W').click()
+          .get('div>.week-day').eq(4).click()
+          .get('.week-day').contains('F').click()
+          .get('input[placeholder="Open Time"]').click()
+          // .get('.time-picker-overlay').click()
+          .get('.hours>li').eq(8).click()
+          .get('.minutes>li').eq(1).click()
+          .get('input[placeholder="Close Time"]').click({force: true})
+          .get('.hours>li').eq(18).click()
+          .get('.minutes>li').last().eq(1).click()
+    })
 })
