@@ -51,8 +51,46 @@ describe('Stan\'s Spec', () => {
           .get('td').contains(newOrgUser)
     })
 
+    xit('sets organization opening hours', () => {
+        cy.visit('/')
+          .get('input[name="email"]').type('stasoletesting+Around@gmail.com')
+          .get('input[name="password"]').type('letitsnow1')
+          .get('button').click()
+          .get('button').contains('Edit Details').click()
+          .get('.btn-actions-pane-right').click()
+          .get('.tab-item').contains('Opening Hours').click()
+          .get('span').contains('Setup').click()
+          .get('a').contains('Add Hours').click()
+          .get('.week-day').contains('M').click()
+          .get('div>.week-day').eq(2).click()
+          .get('.week-day').contains('W').click()
+          .get('div>.week-day').eq(4).click()
+          .get('.week-day').contains('F').click()
+          .get('input[placeholder="Open Time"]').click()
+          .get('.hours>li').eq(8).click()
+          .get('.minutes>li').eq(1).click()
+          .get('input[placeholder="Close Time"]').click({force: true})
+          .get('.hours').eq(1).find('li').eq(18).click()
+          .get('.minutes').eq(1).find('li').eq(1).click()
+          .get('button').contains('Save').click({ force: true })
+          .get('span').contains('Setup').click()
+          .get('.week-day').contains('M').click()
+          .get('div>.week-day').eq(2).click()
+          .get('.week-day').contains('W').click()
+          .get('div>.week-day').eq(4).click()
+          .get('.week-day').contains('F').click()
+          .get('div>.week-day').eq(0).click()
+          .get('div>.week-day').eq(6).click()
+          .get('label').contains('Open 24 hours').prev().click()
+          .get('button').contains('Save').click()
+          .visit('/')
+          .get('input[name="email"]').type('stasoletesting+Around@gmail.com')
+          .get('input[name="password"]').type('letitsnow1')
+          .get('button').click()
+    })
+
     // this test is connected with the one that follows, due to password reset expiring in 60 min
-    it('sends a password reset email to the new organization user', () => {
+    xit('sends a password reset email to the new organization user', () => {
         cy.visit('/')
           .get('input[name="email"]').type(aTWOrgMail)
           .get('input[name="password"]').type(aTWOrgPwd)
@@ -65,7 +103,7 @@ describe('Stan\'s Spec', () => {
     })
 
     // this test is connected with the previous one, due to password reset expiring in 60 min
-    it('resets the password for the new organization user when receiving the password-reset email', () => {
+    xit('resets the password for the new organization user when receiving the password-reset email', () => {
         //the following mailLoging() fails in this test, possibly due to some pages taking longer to load
         baseFunction.mailLoging()
 
@@ -99,28 +137,4 @@ describe('Stan\'s Spec', () => {
         //   .get('div').contains('Supplier').prev().should('include', newOrgUser)
     })
 
-    // the following test is not finished yet
-    xit('sets organization opening hours', () => {
-        cy.visit('/')
-          .get('input[name="email"]').type('stasoletesting+Around@gmail.com')
-          .get('input[name="password"]').type('letitsnow1')
-          .get('button').click()
-          .get('button').contains('Edit Details').click()
-          .get('.btn-actions-pane-right').click()
-          .get('.tab-item').contains('Opening Hours').click()
-          .get('span').contains('Setup').click()
-          .get('a').contains('Add Hours').click()
-          .get('.week-day').contains('M').click()
-          .get('div>.week-day').eq(2).click()
-          .get('.week-day').contains('W').click()
-          .get('div>.week-day').eq(4).click()
-          .get('.week-day').contains('F').click()
-          .get('input[placeholder="Open Time"]').click()
-          // .get('.time-picker-overlay').click()
-          .get('.hours>li').eq(8).click()
-          .get('.minutes>li').eq(1).click()
-          .get('input[placeholder="Close Time"]').click({force: true})
-          .get('.hours>li').eq(18).click()
-          .get('.minutes>li').last().eq(1).click()
-    })
 })
