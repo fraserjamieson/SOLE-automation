@@ -1,5 +1,7 @@
 import baseFunction from '../reusable/orgBaseFunctions';
 import adminPage from '../pageObject/cypMailPage';
+import customerBaseFunction from '../reusable/cstBaseFunctions';
+import customer from '../pageObject/customerPage';
 
 describe('Stan\'s Spec', () => {
     const localAdminEmail = Cypress.env("email"),
@@ -8,7 +10,9 @@ describe('Stan\'s Spec', () => {
           aTWOrgPwd = Cypress.env("aTWOrgPwd"),
           orgUserEmail = Cypress.env("mail"),
           newOrgUser = Cypress.env("newOrgUser"),
-          orgMailPasswd = Cypress.env("mailpwd");
+          orgMailPasswd = Cypress.env("mailpwd"),
+          custEmail = Cypress.env("customerMail"),
+          custUrl = Cypress.env("cstUrl");
 
     xit('logs in as local admin', () => {
         cy.visit('/')
@@ -137,4 +141,14 @@ describe('Stan\'s Spec', () => {
         //   .get('div').contains('Supplier').prev().should('include', newOrgUser)
     })
 
+    it('books a service as a customer', () => {
+        cy.visit(custUrl)
+        Cypress.on("uncaught:exception", (err, runnable) => {
+            return false;
+        })
+        customer.selectMenu('Login')
+        customerBaseFunction.logIn(custEmail)
+        cy.get('#search-middle').type('Around')
+          .get('button').contains('SEARCH').click()
+    })
 })
