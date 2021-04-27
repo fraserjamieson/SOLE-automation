@@ -73,7 +73,7 @@ class baseFunction {
     cy.visit("https://login.aol.com/");
     admn.enterMailId(mailName);
     admn.enterMailPwd(pwd);
-    cy.get(".vp-cc-element.bottom.vp-hide").then(function ($style) {
+    cy.get(".vp-cc-element.bottom.vp-hide",{ timeout: 20000 }).then(function ($style) {
       $style[0].setAttribute("style", "display:none;");
     });
     admn.goToMail();
