@@ -23,4 +23,16 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
-import "cypress-iframe";
+import 'cypress-iframe';
+
+Cypress.Commands.add('adminLogin', (email, password) => {
+  cy.get(':nth-child(1) > .input-group > .form-control').type(email);
+  cy.get(':nth-child(2) > .input-group > .form-control').type(password);
+  cy.get('button.btn').click();
+});
+
+Cypress.Commands.add('clickAddressCheckboxInAdmin', () => {
+  cy.get('.page-title-actions').find('button').click();
+  cy.get('.layout').find('label').filter(':contains("Show Address")').click();
+  cy.get('.card-footer').find('button').click();
+});

@@ -1,17 +1,17 @@
 {
+  "experimentalStudio": true,
   "viewportWidth": 1500,
   "viewportHeight": 900,
   "chromeWebSecurity": false,
+  "integrationFolder": "cypress/integration/soleSpecs",
   "baseUrl": "https://admintest.sole.scot",
   "env": {
     "cstUrl": "https://test.sole.scot/dunbar",
     "email": "dunbar@demo.com",
     "password": "test1234",
-    "mail" : "soletesting@aol.com",
-    "customerMail" : "soletestingcustomer@aol.com",
-    "mailpwd" : "STAAutomation@21",
-    "newPwd" : "test1234"
+    "mail": "soletesting@aol.com",
+    "customerMail": "soletestingcustomer@aol.com",
+    "mailpwd": "STAAutomation@21",
+    "newPwd": "test1234"
   }
-    
-  
 }
