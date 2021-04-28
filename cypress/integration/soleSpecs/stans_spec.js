@@ -2,27 +2,29 @@ import baseFunction from '../reusable/orgBaseFunctions';
 import adminPage from '../pageObject/cypMailPage';
 import customerBaseFunction from '../reusable/cstBaseFunctions';
 import customer from '../pageObject/customerPage';
+import logIn from '../pageObject/solePage';
 
-describe('Stan\'s Spec', () => {
+xdescribe('Local Admin operations', () => {
     const localAdminEmail = Cypress.env("email"),
-          localAdminPwd = Cypress.env("password"),
-          aTWOrgMail = Cypress.env("aTWOrgMail"),
-          aTWOrgPwd = Cypress.env("aTWOrgPwd"),
-          orgUserEmail = Cypress.env("mail"),
-          newOrgUser = Cypress.env("newOrgUser"),
-          orgMailPasswd = Cypress.env("mailpwd"),
-          custEmail = Cypress.env("customerMail"),
-          custUrl = Cypress.env("cstUrl");
+          localAdminPwd = Cypress.env("password");
 
-    xit('logs in as local admin', () => {
+    it('A local admin can log in', () => {
         cy.visit('/')
           .get('input[name="email"]').type(localAdminEmail)
           .get('input[name="password"]').type(localAdminPwd)
           .get('button').click()
           .url().should('include', '/admin/dashboard')
     })
+})
 
-    xit('changes organization admin password from the menu', () => {
+xdescribe('Organization Admin operations', () => {
+    const aTWOrgMail = Cypress.env("aTWOrgMail"),
+          aTWOrgPwd = Cypress.env("aTWOrgPwd"),
+          orgUserEmail = Cypress.env("mail"),
+          newOrgUser = Cypress.env("newOrgUser"),
+          orgMailPasswd = Cypress.env("mailpwd");
+
+    it('Organization admin can change the password from the menu', () => {
         cy.visit('/')
           .get('input[name="email"]').type(aTWOrgMail)
           .get('input[name="password"]').type(aTWOrgPwd)
@@ -40,7 +42,7 @@ describe('Stan\'s Spec', () => {
           .url().should('include', '/admin/preview')
     })
 
-    xit('creates a new organization user', () => {
+    it('Organization admin can create a new organization user', () => {
         cy.visit('/')
           .get('input[name="email"]').type(aTWOrgMail)
           .get('input[name="password"]').type(aTWOrgPwd)
@@ -55,7 +57,7 @@ describe('Stan\'s Spec', () => {
           .get('td').contains(newOrgUser)
     })
 
-    xit('sets organization opening hours', () => {
+    it('Organization admin can set organization opening hours', () => {
         cy.visit('/')
           .get('input[name="email"]').type('stasoletesting+Around@gmail.com')
           .get('input[name="password"]').type('letitsnow1')
@@ -94,7 +96,7 @@ describe('Stan\'s Spec', () => {
     })
 
     // this test is connected with the one that follows, due to password reset expiring in 60 min
-    xit('sends a password reset email to the new organization user', () => {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        it('Organization admin can send a password reset email to the new organization user', () => {
         cy.visit('/')
           .get('input[name="email"]').type(aTWOrgMail)
           .get('input[name="password"]').type(aTWOrgPwd)
@@ -107,7 +109,7 @@ describe('Stan\'s Spec', () => {
     })
 
     // this test is connected with the previous one, due to password reset expiring in 60 min
-    xit('resets the password for the new organization user when receiving the password-reset email', () => {
+    it('New organization user resets the password when receiving the password-reset email', () => {
         //the following mailLoging() fails in this test, possibly due to some pages taking longer to load
         baseFunction.mailLoging()
 
@@ -140,15 +142,28 @@ describe('Stan\'s Spec', () => {
         //   .get('button').contains('Reset Password').click()
         //   .get('div').contains('Supplier').prev().should('include', newOrgUser)
     })
+})
 
-    it('books a service as a customer', () => {
+describe('Customer operations', () => {
+    const custEmail = Cypress.env("customerMail"),
+          custUrl = Cypress.env("cstUrl");
+
+
+    it('A customer can book a service', () => {
         cy.visit(custUrl)
         Cypress.on("uncaught:exception", (err, runnable) => {
             return false;
         })
         customer.selectMenu('Login')
         customerBaseFunction.logIn(custEmail)
-        cy.get('#search-middle').type('Around')
-          .get('button').contains('SEARCH').click()
+        logIn.globalSearch('Around')
+
+        // // the following method is failling
+        // customerBaseFunction.clickOnElement('Around')
+
+        // I used the following line, as the above function failed
+        cy.get('h3').contains('gardens').click()
+
+
     })
 })
