@@ -156,13 +156,13 @@ describe('Customer operations', () => {
         })
         customer.selectMenu('Login')
         customerBaseFunction.logIn(custEmail)
-        logIn.globalSearch('Around')
+        logIn.globalSearch("Jill's")
 
         // // the following method is failling
         // customerBaseFunction.clickOnElement('Around')
 
         // I used the following line, as the above function failed
-        cy.get('h3').contains('gardens').click()
+        // cy.get('h3').contains('Jill'\s').click()
 
 
     })
