@@ -80,11 +80,12 @@ class cstBaseFunction {
     var pwd = Cypress.env("mailpwd"),
       mailName = Cypress.env("customerMail");
 
-    cy.visit("https://login.aol.com/");
+    //cy.visit("https://login.aol.com/"); //https://mail.aol.com/webmail-std/en-gb/suite
+    cy.visit("https://mail.aol.com/webmail-std/en-gb/suite");
     //https://mail.aol.co.uk/
     admn.enterMailId(mailName);
     admn.enterMailPwd(pwd);
-    admn.goToMail();
+   // admn.goToMail();
   }
 }
 export default new cstBaseFunction();
