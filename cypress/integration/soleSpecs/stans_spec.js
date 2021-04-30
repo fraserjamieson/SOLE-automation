@@ -190,7 +190,7 @@ describe("Stan's Spec", () => {
   });
 
   // this test is connected with the one that follows, due to password reset expiring in 60 min
-  xit("sends a password reset email to the new organization user", () => {
+  it("sends a password reset email to the new organization user", () => {
     cy.visit("/")
       .get('input[name="email"]')
       .type(aTWOrgMail)
@@ -263,7 +263,9 @@ describe("Stan's Spec", () => {
     });
     cy.wait(1000);
     cy.writeFile("cypress/fixtures/link.json", { flag: "a+" });
-    cst.goToCustAction("Logout");
+    cy.get(".btn.btn-link.btn-primary")
+    .contains('Close')
+    .click({ force: true });
     cy.wait(2000);
   });
 });
