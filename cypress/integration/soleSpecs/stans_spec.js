@@ -216,7 +216,7 @@ describe("Stan's Spec", () => {
   it("0.1 - resets the password for the new organization user when receiving the password-reset email", () => {
     //the following mailLoging() fails in this test, possibly due to some pages taking longer to load
     
-    //below code working fine on edge browser but having some issue on chrome. I'm trying to resolve it
+    //below code working fine 
     baseFunction.mailLoging();
     adminPage.selectFirstMail();
     adminPage.resrePwdNotification();
