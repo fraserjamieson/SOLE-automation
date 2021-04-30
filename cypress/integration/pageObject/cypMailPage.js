@@ -83,10 +83,10 @@ class adminPage {
   }
   newPWD(email) {
     var newPwd = Cypress.env("mailpwd");
-    cy.get("[name='email']").type(email);
-    cy.get("[placeholder='Password']").type(newPwd);
-    cy.get("[placeholder='Retype password']").type(newPwd);
-    cy.get(".btn").contains("Reset Password").click();
+    //var newPwd = Cypress.env("mailpwd");
+   // cy.get("[name='email']").type(email);
+   cy.get("[placeholder='Password...']").type(newPwd);
+   cy.get("[placeholder='Password confirmation...']").type(newPwd);
     cy.window();
     cy.wait(2000);
   }
