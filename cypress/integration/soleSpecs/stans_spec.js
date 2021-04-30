@@ -1,5 +1,6 @@
 import baseFunction from "../reusable/orgBaseFunctions";
 import adminPage from "../pageObject/cypMailPage";
+import cst from "../pageObject/customerPage";
 
 describe("Stan's Spec", () => {
   const localAdminEmail = Cypress.env("email"),
