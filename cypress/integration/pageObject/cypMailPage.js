@@ -6,6 +6,7 @@ class adminPage {
   enterMailPwd(pwd) {
     cy.get("#login-passwd").type(pwd);
     cy.get("#login-signin").click();
+    cy.wait(3000);
   }
   goToMail() {
     cy.get("li.mail-link")
@@ -19,7 +20,7 @@ class adminPage {
     ).click();
   }
   selectFirstMail() {
-    cy.get("#dijit__Widget_22 > div.mailCount").click();
+    cy.get("#dijit__Widget_22 > div.mailCount",{ timeout: 20000 }).click();
     cy.wait(2000);
     Cypress.on("uncaught:exception", (err, runnable) => {
       // returning false here prevents Cypress from
@@ -81,11 +82,11 @@ class adminPage {
   resrePwdNotification() {
     cy.get(".subjectLine").should("contain.text", "Reset Password Notification");   
   }
-  newPWD(email) {
-    var newPwd = Cypress.env("mailpwd");
-    cy.get("[name='email']").type(email);
-    cy.get("[placeholder='Password']").type(newPwd);
-    cy.get("[placeholder='Retype password']").type(newPwd);
+  newPWD(email,newPwd) {
+    //var newPwd = Cypress.env("mailpwd");
+   // cy.get("[name='email']").type(email);
+    cy.get("[placeholder='Password...']").type(newPwd);
+    cy.get("[placeholder='Password confirmation...']").type(newPwd);
     cy.get(".btn").contains("Reset Password").click();
     cy.window();
     cy.wait(2000);
