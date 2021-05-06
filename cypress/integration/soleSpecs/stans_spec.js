@@ -216,56 +216,116 @@ describe("Stan's Spec", () => {
   xit("0.1 - resets the password for the new organization user when receiving the password-reset email", () => {
     //the following mailLoging() fails in this test, possibly due to some pages taking longer to load
 
-    //below code working fine
-    baseFunction.mailLoging();
-    adminPage.selectFirstMail();
-    adminPage.resrePwdNotification();
-    adminPage.newPwdlink();
-    adminPage.mailLogout();
+    // this test is connected with the previous one, due to password reset expiring in 60 min
+    it("0.1 - resets the password for the new organization user when receiving the password-reset email", () => {
+      //the following mailLoging() fails in this test, possibly due to some pages taking longer to load
 
-    // // the following 8 lines are a failing modification of the above function with added cy.wait()
+      //below code working fine on edge browser but having some issue on chrome. I'm trying to resolve it
+      baseFunction.mailLoging();
+      adminPage.selectFirstMail();
+      adminPage.resrePwdNotification();
+      adminPage.newPwdlink();
+      adminPage.mailLogout();
 
-    // cy.visit("https://login.aol.com/");
-    // adminPage.enterMailId(orgUserEmail);
-    // adminPage.enterMailPwd(orgMailPasswd);
-    // cy.wait(10000)
-    // cy.get(".vp-cc-element.bottom.vp-hide").then(function ($style) {
-    //   $style[0].setAttribute("style", "display:none;");
-    // })
-    // adminPage.goToMail()
+      // // the following 8 lines are a failing modification of the above function with added cy.wait()
 
-    // // the5 following 5 lines are another failing modification of the mailLoging() function
+      // cy.visit("https://login.aol.com/");
+      // adminPage.enterMailId(orgUserEmail);
+      // adminPage.enterMailPwd(orgMailPasswd);
+      // cy.wait(10000)
+      // cy.get(".vp-cc-element.bottom.vp-hide").then(function ($style) {
+      //   $style[0].setAttribute("style", "display:none;");
+      // })
+      // adminPage.goToMail()
 
-    // cy.visit("https://login.aol.com/")
-    // adminPage.enterMailId(orgUserEmail)
-    // adminPage.enterMailPwd(orgMailPasswd)
-    // cy.wait(10000)
-    // cy.get(".mail-link>a").invoke("removeAttr", "target").click()
+      // // the5 following 5 lines are another failing modification of the mailLoging() function
 
-    //   // the following lines have not been tested, due to the mailLoging() function
+      // cy.visit("https://login.aol.com/")
+      // adminPage.enterMailId(orgUserEmail)
+      // adminPage.enterMailPwd(orgMailPasswd)
+      // cy.wait(10000)
+      // cy.get(".mail-link>a").invoke("removeAttr", "target").click()
 
-    //cy.get('span').contains('Inbox').click()
-    // adminPage.selectFirstMail()
-    // cy.get('a').contains('Reset Password').invoke('removeAttr', 'target').click()
-    //   .get('input[name="password"]').type(orgMailPasswd)
-    //   .get('input[name="password_confirmation"]').type(orgMailPasswd)
-    //   .get('button').contains('Reset Password').click()
-    //   .get('div').contains('Supplier').prev().should('include', newOrgUser)
-  });
+      //   // the following lines have not been tested, due to the mailLoging() function
 
-  xit("0.2 - resets the password for the new organization user when receiving the password-reset email", () => {
-    cy.readFile("cypress/fixtures/link.json").then((url) => {
-      cy.visit(url.link);
+      //cy.get('span').contains('Inbox').click()
+      // adminPage.selectFirstMail()
+      // cy.get('a').contains('Reset Password').invoke('removeAttr', 'target').click()
+      //   .get('input[name="password"]').type(orgMailPasswd)
+      //   .get('input[name="password_confirmation"]').type(orgMailPasswd)
+      //   .get('button').contains('Reset Password').click()
+      //   .get('div').contains('Supplier').prev().should('include', newOrgUser)
     });
-    adminPage.newPWD(aTWOrgMail,aTWOrgPwd);
-    Cypress.on("uncaught:exception", (err, runnable) => {
-      return false;
+
+    it("0.2 - resets the password for the new organization user when receiving the password-reset email", () => {
+      cy.readFile("cypress/fixtures/link.json").then((url) => {
+        cy.visit(url.link);
+      });
+      adminPage.newPWD(aTWOrgMail,aTWOrgPwd);
+      Cypress.on("uncaught:exception", (err, runnable) => {
+        return false;
+      });
+      cy.wait(1000);
+      cy.writeFile("cypress/fixtures/link.json", { flag: "a+" });
+      cst.goToCustAction("Logout");
+      cy.wait(2000);
     });
-    cy.wait(1000);
-    cy.writeFile("cypress/fixtures/link.json", { flag: "a+" });
-    cy.get(".btn.btn-link.btn-primary")
-    .contains('Close')
-    .click({ force: true });
-    cy.wait(2000);
-  });
-});
+})
+
+describe('Customer operations', () => {
+    const custEmail = Cypress.env("customerMail"),
+          custUrl = Cypress.env("cstUrl");
+
+    it('A customer can book a service', () => {
+        // let appointmentRefNUm = '';
+        let date = '';
+        let time = '';
+
+        cy.visit(custUrl)
+        Cypress.on("uncaught:exception", (err, runnable) => {
+            return false;
+        })
+        customer.selectMenu('Login')
+        customerBaseFunction.logIn(custEmail)
+        logIn.globalSearch("Jill's")
+
+        cy.get('h3').contains("Jill's").click()
+          .wait(3000)
+          .get('p').contains('Garden').find('input').click()
+        cy.contains('Check Availability').click()
+          .get('input[type="date"]').invoke('removeAttr', 'onkeydown').clear({ force: true }).type('2028-08-07').trigger('change')
+          .get('.comments-reply>ul').eq(0).click()
+          .get('input[type="radio"]').click()
+        cy.contains('Book Now').click()
+        cy.contains('Date : ').then($element => {
+            date = $element.text().slice(7, 17);
+        })
+        cy.contains(' Time: ').then($element => {
+            time = $element.text().slice(7);
+        })
+        console.log(date);
+        console.log(time);
+        // cy.get('input[value="Confirm Booking"]').click()
+        //   .wait(2000)
+        //   // .get('p').contains('reference').then(($elem) => {
+        //   //     let refNumParagraph = $elem.text()
+        //   //     appointmentRefNUm = refNumParagraph.slice(refNumParagraph.search('APP'));
+        //   // })
+        // cy.get('a').contains('My Appointments').click({ force: true })
+        //   .wait(3000)
+        //   // .get('tbody>tr').eq(0).find('td').contains(appointmentRefNUm)
+        // cy.get('tbody>tr').eq(0).find('td').contains(date)
+        // cy.get('tbody>tr').eq(0).find('td').contains(time)
+    })
+})
+
+class reusable {
+    logInAsCustomer(customerEmail) {
+        cy.visit(Cypress.env("cstUrl"));
+        Cypress.on("uncaught:exception", (err, runnable) => {
+            return false;
+        });
+        customer.selectMenu('Login');
+        customerBaseFunction.logIn(customerEmail);
+    }
+}
