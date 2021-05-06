@@ -338,8 +338,8 @@ describe("customer user other scenarios ", () => {
     });
     cy.wait(1000);
     cy.writeFile("cypress/fixtures/link.json", { flag: "a+" });
-    cy.get(".btn.btn-link.btn-primary").contains('Close').click({ force: true });
-   // cst.goToCustAction("Logout");
+    cy.get(".dropbtn").should("contain.text", "Customer ABC");
+    cst.goToCustAction("Logout");
     cy.wait(2000);
   });
 });
