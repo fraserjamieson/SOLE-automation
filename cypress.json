@@ -1,6 +1,7 @@
 {
   "viewportWidth": 1500,
   "viewportHeight": 900,
+  "projectId": "yb4t2u",
   "chromeWebSecurity": false,
   "baseUrl": "https://admintest.sole.scot",
   "env": {
@@ -12,6 +13,6 @@
     "mailpwd" : "STAAutomation@21",
     "newPwd" : "test1234"
   }
-    
   
+
 }
