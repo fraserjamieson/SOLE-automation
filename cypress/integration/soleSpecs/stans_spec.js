@@ -1,6 +1,7 @@
 import baseFunction from "../reusable/orgBaseFunctions";
 import adminPage from "../pageObject/cypMailPage";
-import cst from "../pageObject/customerPage";
+import customer from "../pageObject/customerPage";
+import stansReusable from '../reusable/stansReusables';
 
 describe('Organization admin operations', () => {
   const aTWOrgMail = Cypress.env("aTWOrgMail"),
@@ -233,12 +234,13 @@ describe('Customer operations', () => {
     let date = '';
     let time = '';
 
-    cy.visit(custUrl)
-    Cypress.on("uncaught:exception", (err, runnable) => {
-      return false;
-    })
-    customer.selectMenu('Login')
-    customerBaseFunction.logIn(custEmail)
+    stansReusable.logInAsCustomer(custEmail);
+    // cy.visit(custUrl)
+    // Cypress.on("uncaught:exception", (err, runnable) => {
+    //   return false;
+    // })
+    // customer.selectMenu('Login')
+    // customerBaseFunction.logIn(custEmail)
     logIn.globalSearch("Jill's")
 
     cy.get('h3').contains("Jill's").click()
@@ -270,14 +272,3 @@ describe('Customer operations', () => {
     // cy.get('tbody>tr').eq(0).find('td').contains(time)
   })
 })
-
-class reusable {
-  logInAsCustomer(customerEmail) {
-    cy.visit(Cypress.env("cstUrl"));
-    Cypress.on("uncaught:exception", (err, runnable) => {
-      return false;
-    });
-    customer.selectMenu('Login');
-    customerBaseFunction.logIn(customerEmail);
-  }
-}
