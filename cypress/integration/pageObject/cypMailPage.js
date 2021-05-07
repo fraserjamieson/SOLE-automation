@@ -27,7 +27,9 @@ class adminPage {
       // failing the test
       return false;
     });
-    cy.get("#dojox_grid__grid_GridView_0 #page-0 > div:nth-child(1)",{ timeout: 20000 }).click();
+    cy.get("#dojox_grid__grid_GridView_0 #page-0 > div:nth-child(1)", {
+      timeout: 20000,
+    }).click();
     cy.wait(3000);
   }
   mailLogout() {
@@ -80,7 +82,10 @@ class adminPage {
     cy.wait(2000);
   }
   resrePwdNotification() {
-    cy.get(".subjectLine").should("contain.text", "Reset Password Notification");   
+    cy.get(".subjectLine").should(
+      "contain.text",
+      "Reset Password Notification"
+    );
   }
   newPWD(email,newPwd) {
     //var newPwd = Cypress.env("mailpwd");
@@ -92,8 +97,21 @@ class adminPage {
     cy.get("[name='email']").type(email);
     cy.get("[placeholder='Password']").type(newPwd);
     cy.get("[placeholder='Retype password']").type(newPwd);
+<<<<<<< HEAD
 >>>>>>> work
     cy.get(".btn").contains("Reset Password").click();
+=======
+    cy.get(".btn.btn-primary.btn-block.btn-flat").contains('Reset Password').click({ force: true });
+    cy.window();
+    cy.wait(2000);
+  }
+  newPWDForUser(email) {
+    var newPwd = Cypress.env("mailpwd");
+    //var newPwd = Cypress.env("mailpwd");
+    // cy.get("[name='email']").type(email);
+    cy.get("[placeholder='Password...']").type(newPwd);
+    cy.get("[placeholder='Password confirmation...']").type(newPwd);
+>>>>>>> main
     cy.window();
     cy.wait(2000);
   }
