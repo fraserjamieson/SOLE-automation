@@ -1,8 +1,10 @@
 {
+  "experimentalStudio": true,
   "viewportWidth": 1500,
   "viewportHeight": 900,
   "projectId": "yb4t2u",
   "chromeWebSecurity": false,
+  "integrationFolder": "cypress/integration/soleSpecs",
   "baseUrl": "https://admintest.sole.scot",
   "env": {
     "cstUrl": "https://test.sole.scot/dunbar",
@@ -18,5 +20,4 @@
     "passwdResetUrl": "https://admintest.sole.scot/password/reset/8506bd995a1b45585d3dcbe0908df0e8832948ab8873d221fd6dc2db09485222?email=soletesting%40aol.com"
   }
   
-
 }
