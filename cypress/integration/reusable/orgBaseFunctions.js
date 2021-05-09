@@ -78,6 +78,10 @@ class baseFunction {
     //   $style[0].setAttribute("style", "display:none;");
     // });
     //admn.goToMail();
+    cy.get(".vp-cc-element.bottom.vp-hide",{ timeout: 20000 }).then(function ($style) {
+      $style[0].setAttribute("style", "display:none;");
+    });
+    admn.goToMail();
   }
 }
 export default new baseFunction();
