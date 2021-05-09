@@ -1,9 +1,11 @@
 import baseFunction from "../reusable/orgBaseFunctions";
+import customerBaseFunction from "../reusable/cstBaseFunctions";
 import adminPage from "../pageObject/cypMailPage";
 import customer from "../pageObject/customerPage";
 import stansReusable from '../reusable/stansReusables';
+import logIn from '../pageObject/solePage';
 
-describe('Organization admin operations', () => {
+describe('organization admin operations', () => {
   const aTWOrgMail = Cypress.env("aTWOrgMail"),
         aTWOrgPwd = Cypress.env("aTWOrgPwd"),
         orgUserEmail = Cypress.env("mail"),
@@ -225,50 +227,41 @@ describe('Organization admin operations', () => {
   });
 })
 
-describe('Customer operations', () => {
+describe('customer operations', () => {
   const custEmail = Cypress.env("customerMail"),
   custUrl = Cypress.env("cstUrl");
 
-  it('A customer can book a service', () => {
-    // let appointmentRefNUm = '';
-    let date = '';
-    let time = '';
-
+  xit('books a service', () => {
     stansReusable.logInAsCustomer(custEmail);
-    // cy.visit(custUrl)
-    // Cypress.on("uncaught:exception", (err, runnable) => {
-    //   return false;
-    // })
-    // customer.selectMenu('Login')
-    // customerBaseFunction.logIn(custEmail)
-    logIn.globalSearch("Jill's")
 
-    cy.get('h3').contains("Jill's").click()
-    .wait(3000)
-    .get('p').contains('Garden').find('input').click()
-    cy.contains('Check Availability').click()
-    .get('input[type="date"]').invoke('removeAttr', 'onkeydown').clear({ force: true }).type('2028-08-07').trigger('change')
-    .get('.comments-reply>ul').eq(0).click()
-    .get('input[type="radio"]').click()
-    cy.contains('Book Now').click()
-    cy.contains('Date : ').then($element => {
-      date = $element.text().slice(7, 17);
-    })
-    cy.contains(' Time: ').then($element => {
-      time = $element.text().slice(7);
-    })
-    console.log(date);
-    console.log(time);
-    // cy.get('input[value="Confirm Booking"]').click()
-    //   .wait(2000)
-    //   // .get('p').contains('reference').then(($elem) => {
-    //   //     let refNumParagraph = $elem.text()
-    //   //     appointmentRefNUm = refNumParagraph.slice(refNumParagraph.search('APP'));
-    //   // })
-    // cy.get('a').contains('My Appointments').click({ force: true })
-    //   .wait(3000)
-    //   // .get('tbody>tr').eq(0).find('td').contains(appointmentRefNUm)
-    // cy.get('tbody>tr').eq(0).find('td').contains(date)
-    // cy.get('tbody>tr').eq(0).find('td').contains(time)
+    logIn.globalSearch("Jill's");
+
+    stansReusable.clickOnElementWithText('h3', "Jill's");
+
+    stansReusable.clickOnChildWithParentWithText('p', 'Garden', 'input');
+
+    stansReusable.clickOnText('Check Availability');
+
+    stansReusable.changeCalendarDate('2028-09-11')
+
+    stansReusable.clickOnMultipleChildAtIndex('.comments-reply>ul', 0);
+
+    customerBaseFunction.clickOnElement('input[type="radio"]');
+
+    stansReusable.clickOnText('Book Now');
+
+    stansReusable.sliceTextAsVariable('Date : ', 7, 17, 'date')
+
+    stansReusable.sliceTextAsVariable(' Time: ', 7, 12, 'time')
+
+    customerBaseFunction.clickOnElement('input[value="Confirm Booking"]')
+
+    cy.wait(5000)
+
+    stansReusable.clickOnElementWithText('a', 'My Appointments');
+
+    stansReusable.findAliasInMultipleChildAtIndex('date');
+
+    stansReusable.findAliasInMultipleChildAtIndex('time');
   })
 })

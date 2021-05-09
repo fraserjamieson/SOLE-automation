@@ -74,17 +74,14 @@ class baseFunction {
     cy.visit("https://mail.aol.com/webmail-std/en-gb/suite");
     admn.enterMailId(mailName);
     admn.enterMailPwd(pwd);
-<<<<<<< HEAD
     // cy.get(".vp-cc-element.bottom.vp-hide").then(function ($style) {
     //   $style[0].setAttribute("style", "display:none;");
     // });
     //admn.goToMail();
-=======
     cy.get(".vp-cc-element.bottom.vp-hide",{ timeout: 20000 }).then(function ($style) {
       $style[0].setAttribute("style", "display:none;");
     });
     admn.goToMail();
->>>>>>> work
   }
 }
 export default new baseFunction();

@@ -92,13 +92,7 @@ class adminPage {
     cy.get("[name='email']").type(email);
     cy.get("[placeholder='Password']").type(newPwd);
     cy.get("[placeholder='Retype password']").type(newPwd);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> work
->>>>>>> stans-spec
     cy.get(".btn").contains("Reset Password").click();
-=======
     cy.get(".btn.btn-primary.btn-block.btn-flat").contains('Reset Password').click({ force: true });
     cy.window();
     cy.wait(2000);
@@ -109,7 +103,6 @@ class adminPage {
     // cy.get("[name='email']").type(email);
     cy.get("[placeholder='Password...']").type(newPwd);
     cy.get("[placeholder='Password confirmation...']").type(newPwd);
->>>>>>> main
     cy.window();
     cy.wait(2000);
   }
