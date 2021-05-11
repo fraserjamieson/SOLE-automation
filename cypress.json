@@ -8,6 +8,8 @@
   "baseUrl": "https://admintest.sole.scot",
   "env": {
     "cstUrl": "https://test.sole.scot/dunbar",
+    "existingEmail": "stasoletesting+garden@gmail.com",
+    "existingEmailPwd": "letitsnow1",
     "email": "dunbar@demo.com",
     "password": "test1234",
     "mail" : "soletesting@aol.com",
@@ -17,7 +19,7 @@
     "aTWOrgMail": "stasoletesting+Around@gmail.com",
     "aTWOrgPwd": "letitsnow1",
     "newOrgUser": "Scotty McRainshower",
-    "passwdResetUrl": "https://admintest.sole.scot/password/reset/8506bd995a1b45585d3dcbe0908df0e8832948ab8873d221fd6dc2db09485222?email=soletesting%40aol.com"
+    "orgAddressURL":"https://test.sole.scot/dunbar/garden-yard-s-supplies/detail"
   }
   
 }

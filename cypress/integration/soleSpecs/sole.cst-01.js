@@ -1,4 +1,4 @@
-import cstBasefunction from "../reusable/cstBaseFunctions";
+import cstBasefunction from "../reusable/cstBaseFunctions01";
 import cst from "../pageObject/customerPage";
 import solePg from "../pageObject/solePage";
 import masterPg from "../pageObject/masterPage";

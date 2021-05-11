@@ -105,6 +105,7 @@ class adminPage {
     cy.get("[placeholder='Password confirmation...']").type(newPwd);
     cy.window();
     cy.wait(2000);
+    cy.get(".btn").contains("Reset Password").click();
   }
 }
 export default new adminPage();
