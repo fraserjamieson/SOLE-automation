@@ -1,23 +1,17 @@
 import basefunction from '../reusable/orgBaseFunctions';
 
 describe('Customer user operations ', () => {
-  const cstUrl = Cypress.env('cstUrl');
   const email = Cypress.env('existingEmail');
   const password = Cypress.env('existingEmailPwd');
 
   beforeEach(function () {
-    cy.visit(cstUrl);
-  });
-  afterEach(() => {});
-  it('Org Admin can create a service', () => {
-    // Login
     basefunction.login(email, password);
-
+  });
+  it('Org Admin can create a service', () => {
     // Visit services page
     cy.visit('/admin/servicetype');
 
     // Add new service
-
     // Click add button
     cy.get('.v-btn__content > .router-link-exact-active').click();
     // Enter name
