@@ -1,212 +1,83 @@
-import baseFunction from "../reusable/orgBaseFunctions";
+import basefunction from "../reusable/orgBaseFunctions";
 import customerBaseFunction from "../reusable/cstBaseFunctions01";
 import adminPage from "../pageObject/cypMailPage";
-import cst from "../pageObject/customerPage";
 import cstBaseFunction2 from "../reusable/cstBaseFunctions02";
-import logIn from "../pageObject/solePage";
+import orgPg from "../pageObject/solePage";
 
 describe("organization admin operations", () => {
-  const aTWOrgMail = Cypress.env("aTWOrgMail"),
-    aTWOrgPwd = Cypress.env("aTWOrgPwd"),
-    orgUserEmail = Cypress.env("mail"),
-    newOrgUser = Cypress.env("newOrgUser"),
-    orgMailPasswd = Cypress.env("mailpwd"),
-    existingEmail = Cypress.env("existingEmail"),
-    existingEmailPwd = Cypress.env("existingEmailPwd");
+const aTWOrgMail = Cypress.env("aTWOrgMail"),
+      aTWOrgPwd = Cypress.env("aTWOrgPwd"),
+      orgUserEmail = Cypress.env("mail"),
+      newOrgUser = Cypress.env("newOrgUser"),
+      existingEmail = Cypress.env("existingEmail"),
+      existingEmailPwd = Cypress.env("existingEmailPwd");
 
-  it("changes organization admin password from the menu", () => {
-    cy.visit("/")
-      .get('input[name="email"]')
-      .type(aTWOrgMail)
-      .get('input[name="password"]')
-      .type(aTWOrgPwd)
-      .get("button")
-      .click()
-      .get("#__BVID__15__BV_toggle_")
-      .click()
-      .get("a")
-      .contains("Reset Password")
-      .click()
-      .get("#input-58")
-      .type(aTWOrgPwd)
-      .get("#input-63")
-      .type(aTWOrgPwd)
-      .get("span")
-      .contains("submit")
-      .click()
-      .get("#__BVID__15__BV_toggle_")
-      .click()
-      .get("button")
-      .contains("Logout")
-      .click()
-      .get('input[name="email"]')
-      .type(aTWOrgMail)
-      .get('input[name="password"]')
-      .type(aTWOrgPwd)
-      .get("button")
-      .click()
-      .url()
-      .should("include", "/admin/preview");
+  it("changes organization admin password from the menu" +
+  "Existing org (created prior to a release) can login", () => {
+    //log in with existing mail id
+    basefunction.login(aTWOrgMail, aTWOrgPwd);
+    //select reset password
+    orgPg.resetPwdLinkFromProfile();
+    //reset password
+    orgPg.resetPwdFromProfile(aTWOrgPwd);
+    //log out
+    basefunction.logOut();
+    //log in with set pwd
+    basefunction.login(aTWOrgMail, aTWOrgPwd);
+    //check url is correct
+    cy.url().should("include", "/admin/preview");
   });
 
-  it("creates a new organization user", () => {
-    cy.visit("/")
-      .get('input[name="email"]')
-      .type(aTWOrgMail)
-      .get('input[name="password"]')
-      .type(aTWOrgPwd)
-      .get("button")
-      .click()
-      .get("button")
-      .contains("Edit Details")
-      .click()
-      .wait(3000)
-      .get(".btn-actions-pane-right")
-      .click()
-      .get(".v-form>button")
-      .click()
-      .get("label")
-      .contains("Name")
-      .next()
-      .type(newOrgUser)
-      .get("label")
-      .contains("Email")
-      .next()
-      .type(orgUserEmail)
-      .get("button")
-      .contains("submit")
-      .click()
-      .get("td")
-      .contains(newOrgUser);
+  it("creates a new organization user" + 
+  "Existing org (created prior to a release) can edit org page", () => {
+    //log in with existing mail id
+    basefunction.login(aTWOrgMail, aTWOrgPwd);
+    orgPg.selectEditdetails();
+    //add new user
+    orgPg.addNewUserToOrg(newOrgUser, orgUserEmail);
+    //check user added
+    cy.get("td").contains(newOrgUser);
   });
 
-  it("sets organization opening hours", () => {
-    cy.visit("/")
-      .get('input[name="email"]')
-      .type(existingEmail)
-      .get('input[name="password"]')
-      .type(existingEmailPwd)
-      .get("button")
-      .click()
-      .get("button")
-      .contains("Edit Details")
-      .click()
-      .get(".btn-actions-pane-right")
-      .click()
-      .get(".tab-item")
-      .contains("Opening Hours")
-      .click()
-      .get("span")
-      .contains("Setup")
-      .click()
-      .get("a")
-      .contains("Add Hours")
-      .click()
-      .get(".week-day")
-      .contains("M")
-      .click()
-      .get("div>.week-day")
-      .eq(2)
-      .click()
-      .get(".week-day")
-      .contains("W")
-      .click()
-      .get("div>.week-day")
-      .eq(4)
-      .click()
-      .get(".week-day")
-      .contains("F")
-      .click()
-      .get('input[placeholder="Open Time"]')
-      .click()
-      .get(".hours>li")
-      .eq(8)
-      .click()
-      .get(".minutes>li")
-      .eq(1)
-      .click()
-      .get('input[placeholder="Close Time"]')
-      .click({ force: true })
-      .get(".hours")
-      .eq(1)
-      .find("li")
-      .eq(18)
-      .click()
-      .get(".minutes")
-      .eq(1)
-      .find("li")
-      .eq(1)
-      .click()
-      .get("button")
-      .contains("Save")
-      .click({ force: true })
-      .get("span")
-      .contains("Setup")
-      .click()
-      .get(".week-day")
-      .contains("M")
-      .click()
-      .get("div>.week-day")
-      .eq(2)
-      .click()
-      .get(".week-day")
-      .contains("W")
-      .click()
-      .get("div>.week-day")
-      .eq(4)
-      .click()
-      .get(".week-day")
-      .contains("F")
-      .click()
-      .get("div>.week-day")
-      .eq(0)
-      .click()
-      .get("div>.week-day")
-      .eq(6)
-      .click()
-      .get("label")
-      .contains("Open 24 hours")
-      .prev()
-      .click()
-      .get("button")
-      .contains("Save")
-      .click({ force: true })
-      .visit("/")
-      .get('input[name="email"]')
-      .type(existingEmail)
-      .get('input[name="password"]')
-      .type(existingEmailPwd)
-      .get("button")
-      .click();
+  it("sets organization opening hours" + 
+  "Existing org (created prior to a release) can alter opening hours", () => {
+    //log in with existing mail id
+    basefunction.login(existingEmail, existingEmailPwd);
+    orgPg.selectEditdetails();
+    //set up opening time for working days
+    orgPg.setOpeningHrsWeekDays();
+    // set up opening time for sat and sun
+    orgPg.setOpeningHrsWeekend();
+
+    //check opening time listed correct
+    cy.get("tbody > tr").eq(0).should("contain.text", "Sun No Yes");
+    cy.get("tbody > tr").eq(1).should("contain.text", "Mon No No 07:00:00 - 17:00:00");
+    cy.get("tbody > tr").eq(2).should("contain.text", "Tue No No 07:00:00 - 17:00:00");
+    cy.get("tbody > tr").eq(3).should("contain.text", "Wed No No 07:00:00 - 17:00:00");
+    cy.get("tbody > tr").eq(4).should("contain.text", "Thu No No 07:00:00 - 17:00:00");
+    cy.get("tbody > tr").eq(5).should("contain.text", "Fri No No 07:00:00 - 17:00:00");
+    cy.get("tbody > tr").eq(6).should("contain.text", "Sat No Yes");
+
+    //log out
+    basefunction.logOut();
   });
 
-  // this test is connected with the one that follows, due to password reset expiring in 60 min
-  it("sends a password reset email to the new organization user", () => {
-    cy.visit("/")
-      .get('input[name="email"]')
-      .type(aTWOrgMail)
-      .get('input[name="password"]')
-      .type(aTWOrgPwd)
-      .get("button")
-      .click()
-      .get("button")
-      .contains("Edit Details")
-      .click()
-      .wait(3000)
-      .get(".btn-actions-pane-right")
-      .click()
-      .get("td>button")
-      .contains("mail")
-      .click()
-      .get("span")
-      .contains("Confirm")
-      .click();
+  it("Sends a password reset email to the new organization user" + 
+  "Existing org (created prior to a release) can change password", () => {
+    //log in with existing mail id
+    basefunction.login(aTWOrgMail, aTWOrgPwd);
+    orgPg.selectEditdetails();
+    cy.get(".btn-actions-pane-right").click();
+    orgPg.selectResetMailPwd();
+    orgPg.pwdResetMsg(orgUserEmail);
+    orgPg.pwdResetConfirmMsg(orgUserEmail);
+
+    //log out
+    basefunction.logOut();
   });
 
-  // this test is connected with the previous one, due to password reset expiring in 60 min
   it("0.1 - resets the password for the new organization user when receiving the password-reset email", () => {
-    //below code working fine on edge browser but having some issue on chrome. I'm trying to resolve it
-    baseFunction.mailLoging();
+    basefunction.mailLoging();
     adminPage.selectFirstMail();
     adminPage.resrePwdNotification();
     adminPage.newPwdlink();
@@ -226,10 +97,13 @@ describe("organization admin operations", () => {
     cy.get(".col-md-6").contains("Around the World").click();
     //Need to write function for logout
     cy.wait(2000);
+
+    //log out
+    basefunction.logOut();
   });
 });
 
-describe("customer operations", () => {
+xdescribe("customer operations", () => {
   const custEmail = Cypress.env("customerMail"),
     custUrl = Cypress.env("cstUrl");
 
