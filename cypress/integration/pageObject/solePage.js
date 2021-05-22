@@ -77,8 +77,8 @@ class logIn {
     return cypBtn;
   }
   result() {
-   var result = cy.get('table > tbody > tr > td > div').length;
-   console.log(result);
+    var result = cy.get("table > tbody > tr > td > div").length;
+    console.log(result);
     return result;
   }
   cypMsg() {
@@ -125,8 +125,7 @@ class logIn {
       .type("{enter}");
   }
   selectResetMailPwd() {
-    cy.get("button.v-icon")
-      .contains("mail").click();
+    cy.get("button.v-icon").contains("mail").click();
   }
   pwdResetMsg(email) {
     cy.get("div.v-card")
@@ -135,34 +134,97 @@ class logIn {
         "contain",
         `This will send email to ${email} for resetting their password, Please confirm.`
       );
-      cy.get("button.v-btn")
-      .contains("Confirm").click();
+    cy.get("button.v-btn").contains("Confirm").click();
+    cy.wait(1000);
   }
   pwdResetConfirmMsg(email) {
     cy.get("div.v-card")
       .should("contain", "User password reset request")
-      .should(
-        "contain",
-        `Password reset email link has been sent to ${email}`
-      );
-      cy.get("button.v-btn")
-      .contains("Close").click();
+      .should("contain", `Password reset email link has been sent to ${email}`);
+      cy.wait(1000);
+    cy.get("button.v-btn").contains("Close").click();
   }
   checkSrtipeAccountContent() {
     cy.get("button.tab-item").contains("Users").click();
-      cy.get("thead.v-data-table-header > tr > th")
-      .should(
-        "contain.text",
-        `NameEmailAdmin User?Action`
-      );
+    cy.get("thead.v-data-table-header > tr > th").should(
+      "contain.text",
+      `NameEmailAdmin User?Action`
+    );
   }
   checkSrtipeOpnHrsContent() {
     cy.get("button.tab-item").contains("Opening Hours").click();
-      cy.get("thead.v-data-table-header > tr > th")
-      .should(
-        "contain.text",
-        `DayClosedOpen 24 hrsTimingsActions`
-      );
+    cy.get("thead.v-data-table-header > tr > th").should(
+      "contain.text",
+      `DayClosedOpen 24 hrsTimingsActions`
+    );
+  }
+  resetPwdLinkFromProfile() {
+    cy.get("#__BVID__15__BV_toggle_").click();
+    cy.get("a").contains("Reset Password").click();
+  }
+  resetPwdFromProfile(Entertext) {
+    cy.get("#input-58").type(Entertext);
+    cy.get("#input-63").type(Entertext);
+    cy.get("span").contains("submit").click();
+  }
+  selectEditdetails() {
+    cy.get("button").contains("Edit Details").click();
+    cy.wait(3000);
+  }
+  addNewUserToOrg(userName, userMail) {
+    cy.get(".btn-actions-pane-right").click();
+    cy.get(".v-form>button").click();
+    cy.get("label").contains("Name").next().type(userName);
+    cy.get("label").contains("Email").next().type(userMail);
+    cy.get("button").contains("submit").click();
+    cy.wait(3000);
+  }
+
+  setOpeningHrsWeekDays() {
+    cy.get(".btn-actions-pane-right").click();
+    cy.get(".tab-item").contains("Opening Hours").click();
+    cy.wait(1000);
+    //delete the existing time
+    cy.get("body").then(($body) => {
+      if ($body.find("td:nth-child(5) > :nth-child(4)").length > 0) {
+        var count = $body.find("td:nth-child(5) > :nth-child(4)").length;
+        while (count > 0) {
+          cy.get(":nth-child(1) > :nth-child(5) > :nth-child(4)").click();
+          count = count - 1;
+        }
+      }
+    });
+    // check if data is empty
+    cy.get("tbody").eq(0).should("contain.text", "No data available");
+    //set up new time
+    cy.get("span").contains("Setup").click();
+    cy.get("a").contains("Add Hours").click();
+    cy.get(".week-day").contains("M").click();
+    cy.get("div>.week-day").eq(2).click();
+    cy.get(".week-day").contains("W").click();
+    cy.get("div>.week-day").eq(4).click();
+    cy.get(".week-day").contains("F").click();
+    cy.get('input[placeholder="Open Time"]').click();
+    cy.get(".hours>li").eq(8).click();
+    cy.get(".minutes>li").eq(1).click();
+    cy.get('input[placeholder="Close Time"]').click({ force: true });
+    cy.get(".hours").eq(1).find("li").eq(18).click();
+    cy.get(".minutes").eq(1).find("li").eq(1).click();
+    cy.get("button").contains("Save").click({ force: true });
+    cy.wait(2000);
+  }
+  setOpeningHrsWeekend() {
+    cy.get("span").contains("Setup").click();
+    cy.get(".week-day").contains("S").click();
+    cy.get("div>.week-day").eq(1).click();
+    cy.get("div>.week-day").eq(2).click();
+    cy.get("div>.week-day").eq(3).click();
+    cy.get("div>.week-day").eq(4).click();
+    cy.get("div>.week-day").eq(5).click();
+    cy.get("div>.week-day").eq(6).click();
+    cy.get("label").contains("Open 24 hours").prev().click({ force: true });
+    cy.get("button").contains("Save").click({ force: true });
+    cy.wait(2000);
   }
 }
 export default new logIn();
