@@ -8,7 +8,7 @@
   "baseUrl": "https://admintest.sole.scot",
   "env": {
     "cstUrl": "https://test.sole.scot/dunbar",
-    "existingEmail": "stasoletesting+Garden@gmail.com",
+    "existingEmail": "stasoletesting+garden@gmail.com",
     "existingEmailPwd": "letitsnow1",
     "email": "dunbar@demo.com",
     "password": "test1234",

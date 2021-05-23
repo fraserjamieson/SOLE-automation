@@ -76,6 +76,7 @@ const aTWOrgMail = Cypress.env("aTWOrgMail"),
     basefunction.logOut();
   });
 
+  // this test is connected with the previous one, due to password reset expiring in 60 min
   it("0.1 - resets the password for the new organization user when receiving the password-reset email", () => {
     basefunction.mailLoging();
     adminPage.selectFirstMail();
@@ -103,7 +104,7 @@ const aTWOrgMail = Cypress.env("aTWOrgMail"),
   });
 });
 
-xdescribe("customer operations", () => {
+describe("customer operations", () => {
   const custEmail = Cypress.env("customerMail"),
     custUrl = Cypress.env("cstUrl");
 
