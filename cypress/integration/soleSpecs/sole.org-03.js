@@ -1,4 +1,5 @@
 import basefunction from '../reusable/orgBaseFunctions';
+// import orgPg from "../pageObject/solePage";
 
 describe('Customer user operations ', () => {
   const email = Cypress.env('existingEmail');
@@ -7,7 +8,7 @@ describe('Customer user operations ', () => {
   beforeEach(function () {
     basefunction.login(email, password);
   });
-  it('Org Admin can create a service', () => {
+  xit('Org Admin can create a service', () => {
     // Visit services page
     cy.visit('/admin/servicetype');
 
@@ -15,13 +16,13 @@ describe('Customer user operations ', () => {
     // Click add button
     cy.get('.v-btn__content > .router-link-exact-active').click();
     // Enter name
-    cy.get('#input-92').clear().type('Automated Test Service');
+    cy.get('#input-97').clear().type('Automated Test Service');
     // Enter price
-    cy.get('#input-96').clear().type('100');
+    cy.get('#input-101').clear().type('100');
     // Enter time
-    cy.get('#input-100').clear().type('60');
+    cy.get('#input-105').clear().type('60');
     // Enter description
-    cy.get('#input-108')
+    cy.get('#input-113')
       .clear()
       .type('This is a service added automatically by a test');
     // Check bookable checkbox
@@ -30,12 +31,34 @@ describe('Customer user operations ', () => {
     cy.get('.btn-shadow-primary > .v-btn__content').click();
 
     // Search for new service
-    cy.get('#input-128').clear().type('Automated Test Service');
+    cy.get('#input-133').clear().type('Automated Test Service');
 
     // Check text shows in service table
-    cy.get('tbody > tr').should('contain', 'Automated Test Service');
+    cy.get('table > tbody > tr').should('contain', 'Automated Test Service');
 
     // Delete newly added service
-    cy.get(':nth-child(1) > .justify-center > .v-icon--link').click();
+    cy.get(':nth-child(1) > .justify-center > .v-icon').click();
+  });
+  it("Org Admin can hide address", function () {
+    cy.contains('Edit Details').click()
+     // Uncheck show address checkbox
+    // cy.get('label').contains('Show Address').prev().click();
+   
+    cy.get('.v-input--selection-controls__input').last().click()
+
+    cy.get('.v-input--selection-controls__input > input').last().should('not.be.checked')
+    
+    // .should('contain.text', 'Show Address?: No')
+
+    
+
+    // .should('not.be.checked');
+
+    // Visit a web page.
+    // Query for an element.
+    // Interact with that element.
+    // Assert about the content on the page.
+    // <input aria-checked="false">
+
   });
 });
