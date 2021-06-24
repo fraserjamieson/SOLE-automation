@@ -40,25 +40,11 @@ describe('Customer user operations ', () => {
     cy.get(':nth-child(1) > .justify-center > .v-icon').click();
   });
   it("Org Admin can hide address", function () {
-    cy.contains('Edit Details').click()
-     // Uncheck show address checkbox
-    // cy.get('label').contains('Show Address').prev().click();
-   
-    cy.get('.v-input--selection-controls__input').last().click()
-
-    cy.get('.v-input--selection-controls__input > input').last().should('not.be.checked')
-    
-    // .should('contain.text', 'Show Address?: No')
-
-    
-
-    // .should('not.be.checked');
-
-    // Visit a web page.
+    cy.contains('Edit Details').click();
     // Query for an element.
     // Interact with that element.
+     cy.get('.v-input--selection-controls__input').last().click();
     // Assert about the content on the page.
-    // <input aria-checked="false">
-
+    cy.get('.v-input--selection-controls__input > input').last().should('not.be.checked');
   });
 });
